@@ -9,6 +9,8 @@ cache:
 before_install:
   - sudo pip install -r requirements.txt
   - GIMME_OUTPUT=$(gimme 1.7.5) && eval "$GIMME_OUTPUT"
+  - export GOPATH=$HOME/gopath
+  - export PATH=$HOME/gopath/bin:$PATH
   - go get -v github.com/spf13/hugo
 
 env:
