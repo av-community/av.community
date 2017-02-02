@@ -1,4 +1,4 @@
-<img src="static/images/logo.png" align="right" width="100" />
+<img src="static/images/logo.png" align="right" width="200" />
 
 # av.community
 
