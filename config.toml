@@ -1,8 +1,11 @@
 title = "av.community"
 baseurl = "https://av.community/"
 languagecode = "en-us"
+disableHugoGeneratorInject = true
 
 pygmentscodefences = true
 pygmentsuseclasses = true
 
 canonifyurls = true
+
+staticdir = ".tmp"

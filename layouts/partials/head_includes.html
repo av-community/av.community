@@ -1,13 +1,3 @@
-<!-- HTTPS -->
-
-<script type="text/javascript">
-    var baseURL = '{{ .Site.BaseURL }}';
-    var host = baseURL.substring(0, baseURL.length - 1).replace(/\//g, '');
-    if ((host === window.location.host) && (window.location.protocol !== 'https:')) {
-        window.location.protocol = 'https:';
-    }
-</script>
-
 <!-- CSS -->
 
 <style type="text/css">a{color: white;}</style>
@@ -19,9 +9,9 @@
 
 {{ if .Site.Params.cachebuster }}
     {{ $t := .Now.Unix }}
-    <link rel="stylesheet" href="/css/main.css?t={{$t}}">
+    <link rel="stylesheet" href="/styles/main.css?t={{$t}}">
 {{ else }}
-    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/styles/main.css">
 {{ end }}
 
 <!-- Icon -->
