@@ -1,24 +1,27 @@
-const path = require('path');
 const autoprefixer = require('gulp-autoprefixer');
+const babel = require('gulp-babel');
+const cache = require('gulp-cache');
+const concat = require('gulp-concat');
 const cssnano = require('gulp-cssnano');
 const del = require('del');
+const eslint = require('gulp-eslint');
+const fs = require('fs');
 const gulp = require('gulp');
 const htmlmin = require('gulp-htmlmin');
+const imagemin = require('gulp-imagemin');
 const newer = require('gulp-newer');
 const pagespeed = require('psi').output;
+const path = require('path');
+const realFavicon = require('gulp-real-favicon');
 const runSequence = require('run-sequence');
 const sass = require('gulp-sass');
 const shell = require('gulp-shell');
-const swPrecache = require('sw-precache');
 const size = require('gulp-size');
-const babel = require('gulp-babel');
+const swPrecache = require('sw-precache');
 const uglify = require('gulp-uglify');
-const concat = require('gulp-concat');
-const cache = require('gulp-cache');
-const imagemin = require('gulp-imagemin');
-const eslint = require('gulp-eslint');
 
 const AUTOPREFIXER_BROWSERS = ['last 2 versions', '> 1%'];
+const FAVICON_DATA_FILE = 'config/favicons.json';
 
 gulp.task('hugo', shell.task(['hugo']));
 gulp.task('hugo:server', shell.task(['hugo', 'server']));
@@ -73,6 +76,11 @@ gulp.task('scripts', () =>
 
 gulp.task('html', () =>
   gulp.src('public/**/*.html')
+    .pipe(
+      realFavicon.injectFaviconMarkups(
+        JSON.parse(fs.readFileSync(FAVICON_DATA_FILE)).favicon.html_code,
+      ),
+    )
     .pipe(htmlmin({
       removeComments: true,
       collapseWhitespace: true,
@@ -144,5 +152,77 @@ gulp.task('generate-service-worker', ['copy-sw-scripts'], () => {
     // This is '/' rather than path.sep because the paths returned from
     // glob always use '/'.
     stripPrefix: `${rootDir}/`,
+  });
+});
+
+gulp.task('generate-favicon', (done) => {
+  realFavicon.generateFavicon({
+    masterPicture: 'static/images/logo.png',
+    dest: 'static/icons',
+    iconsPath: '/icons/',
+    design: {
+      ios: {
+        pictureAspect: 'backgroundAndMargin',
+        backgroundColor: '#ffffff',
+        margin: '42%',
+        assets: {
+          ios6AndPriorIcons: true,
+          ios7AndLaterIcons: true,
+          precomposedIcons: false,
+          declareOnlyDefaultIcon: false,
+        },
+      },
+      desktopBrowser: {},
+      windows: {
+        pictureAspect: 'noChange',
+        backgroundColor: '#00aba9',
+        onConflict: 'override',
+        assets: {
+          windows80Ie10Tile: true,
+          windows10Ie11EdgeTiles: {
+            small: true,
+            medium: true,
+            big: true,
+            rectangle: true,
+          },
+        },
+      },
+      androidChrome: {
+        pictureAspect: 'shadow',
+        themeColor: '#ffffff',
+        manifest: {
+          name: 'av.community',
+          display: 'standalone',
+          orientation: 'notSet',
+          onConflict: 'override',
+          declared: true,
+        },
+        assets: {
+          legacyIcon: true,
+          lowResolutionIcons: true,
+        },
+      },
+      safariPinnedTab: {
+        pictureAspect: 'silhouette',
+        themeColor: '#5bbad5',
+      },
+    },
+    settings: {
+      scalingAlgorithm: 'Mitchell',
+      errorOnImageTooSmall: false,
+    },
+    markupFile: FAVICON_DATA_FILE,
+  }, () => {
+    done();
+  });
+});
+
+gulp.task('check-for-favicon-update', (done) => {
+  const currentVersion = JSON.parse(fs.readFileSync(FAVICON_DATA_FILE)).version;
+  realFavicon.checkForUpdates(currentVersion, (err) => {
+    if (err) {
+      throw err;
+    }
+    done();
   });
 });
