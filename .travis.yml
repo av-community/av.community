@@ -1,7 +1,7 @@
 language: go
 
 before_install:
-  - pip install pygments
+  - sudo pip install pygments
 
 install: go get -v github.com/spf13/hugo
 
