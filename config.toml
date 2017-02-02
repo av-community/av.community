@@ -1,5 +1,8 @@
 title = "av.community"
 baseurl = "https://av.community/"
-languageCode = "en-us"
+languagecode = "en-us"
+
+pygmentscodefences = true
+pygmentsuseclasses = true
 
 canonifyurls = true
