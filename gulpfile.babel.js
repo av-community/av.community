@@ -24,20 +24,20 @@ gulp.task('hugo', shell.task(['hugo']));
 gulp.task('hugo:server', shell.task(['hugo', 'server']));
 
 gulp.task('lint', () =>
-  gulp.src(['static/scripts/**/*.js','!node_modules/**'])
+  gulp.src(['static/scripts/**/*.js', '!node_modules/**'])
     .pipe(eslint())
     .pipe(eslint.format())
-    .pipe(eslint.failAfterError())
+    .pipe(eslint.failAfterError()),
 );
 
 gulp.task('images', () =>
   gulp.src('static/images/**/*')
     .pipe(cache(imagemin({
       progressive: true,
-      interlaced: true
+      interlaced: true,
     })))
     .pipe(size({ title: 'images' }))
-    .pipe(gulp.dest('.tmp/images'))
+    .pipe(gulp.dest('.tmp/images')),
 );
 
 gulp.task('styles', () =>
@@ -50,7 +50,7 @@ gulp.task('styles', () =>
     .pipe(autoprefixer(AUTOPREFIXER_BROWSERS))
     .pipe(cssnano())
     .pipe(size({ title: 'styles' }))
-    .pipe(gulp.dest('.tmp/styles'))
+    .pipe(gulp.dest('.tmp/styles')),
 );
 
 gulp.task('scripts', () =>
@@ -58,7 +58,7 @@ gulp.task('scripts', () =>
       // Note: Since we are not using useref in the scripts build pipeline,
       //       you need to explicitly list your scripts here in the right order
       //       to be correctly concatenated
-      './static/scripts/main.js'
+      './static/scripts/main.js',
       // Other scripts
     ])
       .pipe(newer('.tmp/scripts'))
@@ -68,7 +68,7 @@ gulp.task('scripts', () =>
       .pipe(uglify({ preserveComments: 'some' }))
       // Output files
       .pipe(size({ title: 'scripts' }))
-      .pipe(gulp.dest('.tmp/scripts'))
+      .pipe(gulp.dest('.tmp/scripts')),
 );
 
 gulp.task('html', () =>
@@ -84,7 +84,7 @@ gulp.task('html', () =>
       removeStyleLinkTypeAttributes: true,
       removeOptionalTags: true,
     }))
-    .pipe(gulp.dest('public'))
+    .pipe(gulp.dest('public')),
 );
 
 gulp.task('clean', () => del(['.tmp', 'public/*', '!public/.git'], { dot: true }));
@@ -95,18 +95,18 @@ gulp.task('build', ['clean'], cb =>
     'hugo',
     ['html'],
     'generate-service-worker',
-    cb
-  )
+    cb,
+  ),
 );
 
-gulp.task('default' , cb =>
+gulp.task('default', cb =>
   runSequence(
     ['images', 'scripts', 'styles'],
-    cb
-  )
+    cb,
+  ),
 );
 
-gulp.task('watch', ['images', 'scripts', 'styles'], (cb) => {
+gulp.task('watch', ['images', 'scripts', 'styles'], (_) => { // eslint-disable-line no-unused-vars
   gulp.watch(['static/styles/**/*.{scss,css}'], ['styles']);
   gulp.watch(['static/scripts/**/*.js'], ['scripts']);
   gulp.watch(['static/images/**/*'], ['images']);
@@ -114,14 +114,12 @@ gulp.task('watch', ['images', 'scripts', 'styles'], (cb) => {
 
 gulp.task('pagespeed', cb =>
   pagespeed('av.community', {
-    strategy: 'mobile'
-  }, cb)
+    strategy: 'mobile',
+  }, cb),
 );
 
-gulp.task('copy-sw-scripts', () => {
-  return gulp.src(['node_modules/sw-toolbox/sw-toolbox.js', 'static/scripts/sw/runtime-caching.js'])
-    .pipe(gulp.dest('public/scripts/sw'));
-});
+gulp.task('copy-sw-scripts', () => gulp.src(['node_modules/sw-toolbox/sw-toolbox.js', 'static/scripts/sw/runtime-caching.js'])
+    .pipe(gulp.dest('public/scripts/sw')));
 
 gulp.task('generate-service-worker', ['copy-sw-scripts'], () => {
   const rootDir = 'public';
@@ -133,18 +131,18 @@ gulp.task('generate-service-worker', ['copy-sw-scripts'], () => {
     // sw-toolbox.js needs to be listed first. It sets up methods used in runtime-caching.js.
     importScripts: [
       'scripts/sw/sw-toolbox.js',
-      'scripts/sw/runtime-caching.js'
+      'scripts/sw/runtime-caching.js',
     ],
     staticFileGlobs: [
       // Add/remove glob patterns to match your directory setup.
       `${rootDir}/images/**/*`,
       `${rootDir}/scripts/**/*.js`,
       `${rootDir}/styles/**/*.css`,
-      `${rootDir}/*.{html,json}`
+      `${rootDir}/*.{html,json}`,
     ],
     // Translates a static file path to the relative URL that it's served from.
     // This is '/' rather than path.sep because the paths returned from
     // glob always use '/'.
-    stripPrefix: rootDir + '/'
+    stripPrefix: `${rootDir}/`,
   });
 });
