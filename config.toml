@@ -1,0 +1,6 @@
+title = "av.community"
+baseurl = "https://av.community/"
+languageCode = "en-us"
+theme = "av"
+
+canonifyurls = true
