@@ -158,8 +158,8 @@ gulp.task('generate-service-worker', ['copy-sw-scripts'], () => {
 gulp.task('generate-favicon', (done) => {
   realFavicon.generateFavicon({
     masterPicture: 'static/images/logo.png',
-    dest: 'static/icons',
-    iconsPath: '/icons/',
+    dest: 'static/images/icons',
+    iconsPath: '/images/icons/',
     design: {
       ios: {
         pictureAspect: 'backgroundAndMargin',
