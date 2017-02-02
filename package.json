@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "build-css": "node-sass --output-style compressed --include-path themes/av/static/scss themes/av/static/scss/main.scss themes/av/static/css/main.css",
+    "build-css": "node-sass --output-style compressed --include-path scss scss/main.scss static/css/main.css",
     "watch-css": "npm run build-css -- --watch"
   },
   "dependencies": {
