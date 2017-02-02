@@ -1,12 +1,18 @@
 #!/usr/bin/env bash
 
-# Push built files to gh-pages
+rev=$(git rev-parse --short HEAD)
+
 cd public
-cp -r ../.git .
-git fetch origin
-git reset --soft origin/gh-pages
-git add -A
-git commit -am "Automated deploy $(date)" --allow-empty
-git checkout -b gh-pages
-git push origin gh-pages
-rm -rf .git
+
+git init
+git config user.name "Jacob Gillespie"
+git config user.email "jacobwgillespie@gmail.com"
+
+git remote add upstream "https://$GH_TOKEN@github.com/av-community/av.community.git"
+git fetch upstream && git reset upstream/gh-pages
+
+touch .
+
+git add -A .
+git commit -m "Deploy ${rev}"
+git push -q upstream HEAD:gh-pages
