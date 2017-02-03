@@ -76,11 +76,6 @@ gulp.task('scripts', () =>
 
 gulp.task('html', () =>
   gulp.src('public/**/*.html')
-    .pipe(
-      realFavicon.injectFaviconMarkups(
-        JSON.parse(fs.readFileSync(FAVICON_DATA_FILE)).favicon.html_code,
-      ),
-    )
     .pipe(htmlmin({
       removeComments: true,
       collapseWhitespace: true,
