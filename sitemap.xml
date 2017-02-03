@@ -59,6 +59,11 @@
   </url>
   
   <url>
+    <loc>https://av.community/tags/h264/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://av.community/guides/how-codecs-work/</loc>
   </url>
   
@@ -107,11 +112,21 @@
   </url>
   
   <url>
+    <loc>https://av.community/tags/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://av.community/topics/</loc>
   </url>
   
   <url>
     <loc>https://av.community/codecs/video/</loc>
+  </url>
+  
+  <url>
+    <loc>https://av.community/tags/x264/</loc>
+    <priority>0</priority>
   </url>
   
   <url>
