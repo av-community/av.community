@@ -2,13 +2,11 @@ const autoprefixer = require('gulp-autoprefixer');
 const babel = require('gulp-babel');
 const cache = require('gulp-cache');
 const concat = require('gulp-concat');
-const critical = require('critical').stream;
 const cssnano = require('gulp-cssnano');
 const del = require('del');
 const eslint = require('gulp-eslint');
 const fs = require('fs');
 const gulp = require('gulp');
-const gutil = require('gulp-util');
 const htmlmin = require('gulp-htmlmin');
 const imagemin = require('gulp-imagemin');
 const newer = require('gulp-newer');
@@ -109,17 +107,6 @@ gulp.task('html', () =>
     .pipe(gulp.dest('public')),
 );
 
-gulp.task('critical-css', () =>
-  gulp.src('public/**/*.html')
-    .pipe(critical({
-      base: 'public/',
-      inline: true,
-      minify: true,
-      css: ['public/assets/styles/main.css'],
-    }))
-    .on('error', err => gutil.log(gutil.colors.red(err.message)))
-    .pipe(gulp.dest('public')),
-);
 
 gulp.task('clean', () => del(['.tmp', 'public/*', '!public/.git'], { dot: true }));
 
@@ -129,7 +116,7 @@ gulp.task('build', ['clean'], cb =>
     'html',
     ['images', 'scripts', 'styles'],
     'revision',
-    ['critical-css', 'generate-service-worker'],
+    ['generate-service-worker'],
     cb,
   ),
 );
