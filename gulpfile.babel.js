@@ -28,33 +28,33 @@ gulp.task('hugo', shell.task(['hugo']));
 gulp.task('hugo:server', shell.task(['hugo', 'server']));
 
 gulp.task('lint', () =>
-  gulp.src(['static/scripts/**/*.js', '!node_modules/**'])
+  gulp.src(['assets/scripts/**/*.js', '!node_modules/**'])
     .pipe(eslint())
     .pipe(eslint.format())
     .pipe(eslint.failAfterError()),
 );
 
 gulp.task('images', () =>
-  gulp.src('static/images/**/*')
+  gulp.src('assets/images/**/*')
     .pipe(cache(imagemin({
       progressive: true,
       interlaced: true,
     })))
     .pipe(size({ title: 'images' }))
-    .pipe(gulp.dest('.tmp/images')),
+    .pipe(gulp.dest('.tmp/assets/images')),
 );
 
 gulp.task('styles', () =>
   gulp.src([
-    'static/styles/**/*.scss',
-    'static/styles/**/*.css',
+    'assets/styles/**/*.scss',
+    'assets/styles/**/*.css',
   ])
-    .pipe(newer('.tmp/styles'))
+    .pipe(newer('.tmp/assets/styles'))
     .pipe(sass({ precision: 10 }).on('error', sass.logError))
     .pipe(autoprefixer(AUTOPREFIXER_BROWSERS))
     .pipe(cssnano())
     .pipe(size({ title: 'styles' }))
-    .pipe(gulp.dest('.tmp/styles')),
+    .pipe(gulp.dest('.tmp/assets/styles')),
 );
 
 gulp.task('scripts', () =>
@@ -62,17 +62,17 @@ gulp.task('scripts', () =>
       // Note: Since we are not using useref in the scripts build pipeline,
       //       you need to explicitly list your scripts here in the right order
       //       to be correctly concatenated
-      './static/scripts/main.js',
+      './assets/scripts/main.js',
       // Other scripts
     ])
-      .pipe(newer('.tmp/scripts'))
+      .pipe(newer('.tmp/assets/scripts'))
       .pipe(babel())
-      .pipe(gulp.dest('.tmp/scripts'))
+      .pipe(gulp.dest('.tmp/assets/scripts'))
       .pipe(concat('main.min.js'))
       .pipe(uglify({ preserveComments: 'some' }))
       // Output files
       .pipe(size({ title: 'scripts' }))
-      .pipe(gulp.dest('.tmp/scripts')),
+      .pipe(gulp.dest('.tmp/assets/scripts')),
 );
 
 gulp.task('revision', () =>
@@ -107,8 +107,8 @@ gulp.task('build', ['clean'], cb =>
     ['images', 'scripts', 'styles'],
     'hugo',
     ['html'],
-    'generate-service-worker',
     'revision',
+    'generate-service-worker',
     cb,
   ),
 );
@@ -121,9 +121,9 @@ gulp.task('default', cb =>
 );
 
 gulp.task('watch', ['images', 'scripts', 'styles'], (_) => { // eslint-disable-line no-unused-vars
-  gulp.watch(['static/styles/**/*.{scss,css}'], ['styles']);
-  gulp.watch(['static/scripts/**/*.js'], ['scripts']);
-  gulp.watch(['static/images/**/*'], ['images']);
+  gulp.watch(['assets/styles/**/*.{scss,css}'], ['styles']);
+  gulp.watch(['assets/scripts/**/*.js'], ['scripts']);
+  gulp.watch(['assets/images/**/*'], ['images']);
 });
 
 gulp.task('pagespeed', cb =>
@@ -132,8 +132,8 @@ gulp.task('pagespeed', cb =>
   }, cb),
 );
 
-gulp.task('copy-sw-scripts', () => gulp.src(['node_modules/sw-toolbox/sw-toolbox.js', 'static/scripts/sw/runtime-caching.js'])
-    .pipe(gulp.dest('public/scripts/sw')));
+gulp.task('copy-sw-scripts', () => gulp.src(['node_modules/sw-toolbox/sw-toolbox.js', 'assets/scripts/sw/runtime-caching.js'])
+    .pipe(gulp.dest('public/assets/scripts/sw')));
 
 gulp.task('generate-service-worker', ['copy-sw-scripts'], () => {
   const rootDir = 'public';
@@ -144,14 +144,12 @@ gulp.task('generate-service-worker', ['copy-sw-scripts'], () => {
     cacheId: 'av-community',
     // sw-toolbox.js needs to be listed first. It sets up methods used in runtime-caching.js.
     importScripts: [
-      'scripts/sw/sw-toolbox.js',
-      'scripts/sw/runtime-caching.js',
+      'assets/scripts/sw/sw-toolbox.js',
+      'assets/scripts/sw/runtime-caching.js',
     ],
     staticFileGlobs: [
       // Add/remove glob patterns to match your directory setup.
-      `${rootDir}/images/**/*`,
-      `${rootDir}/scripts/**/*.js`,
-      `${rootDir}/styles/**/*.css`,
+      `${rootDir}/assets/**/*`,
       `${rootDir}/*.{html,json}`,
     ],
     // Translates a static file path to the relative URL that it's served from.
@@ -163,9 +161,9 @@ gulp.task('generate-service-worker', ['copy-sw-scripts'], () => {
 
 gulp.task('generate-favicon', (done) => {
   realFavicon.generateFavicon({
-    masterPicture: 'static/images/logo.png',
-    dest: 'static/images/icons',
-    iconsPath: '/images/icons/',
+    masterPicture: 'assets/images/logo.png',
+    dest: 'assets/images/icons',
+    iconsPath: '/assets/images/icons/',
     design: {
       ios: {
         pictureAspect: 'backgroundAndMargin',
