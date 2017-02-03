@@ -129,7 +129,7 @@ gulp.task('build', ['clean'], cb =>
     'html',
     ['images', 'scripts', 'styles'],
     'revision',
-    ['generate-service-worker'],
+    ['critical-css', 'generate-service-worker'],
     cb,
   ),
 );
