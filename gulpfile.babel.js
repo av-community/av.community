@@ -13,6 +13,7 @@ const newer = require('gulp-newer');
 const pagespeed = require('psi').output;
 const path = require('path');
 const realFavicon = require('gulp-real-favicon');
+const revAll = require('gulp-rev-all');
 const runSequence = require('run-sequence');
 const sass = require('gulp-sass');
 const shell = require('gulp-shell');
@@ -74,6 +75,15 @@ gulp.task('scripts', () =>
       .pipe(gulp.dest('.tmp/scripts')),
 );
 
+gulp.task('revision', () =>
+  gulp.src('public/**')
+    .pipe(revAll.revision({
+      dontRenameFile: ['.html'],
+      dontUpdateReference: ['.html'],
+    }))
+    .pipe(gulp.dest('public')),
+);
+
 gulp.task('html', () =>
   gulp.src('public/**/*.html')
     .pipe(htmlmin({
@@ -98,6 +108,7 @@ gulp.task('build', ['clean'], cb =>
     'hugo',
     ['html'],
     'generate-service-worker',
+    'revision',
     cb,
   ),
 );

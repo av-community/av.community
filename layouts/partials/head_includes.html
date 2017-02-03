@@ -1,18 +1,8 @@
 <!-- CSS -->
-
 <style type="text/css">a{color: white;}</style>
-
-<!-- Fonts and icon CSS -->
-
 <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300italic,600,600italic' rel='stylesheet' type='text/css'>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
-
-{{ if .Site.Params.cachebuster }}
-    {{ $t := .Now.Unix }}
-    <link rel="stylesheet" href="/styles/main.css?t={{$t}}">
-{{ else }}
-    <link rel="stylesheet" href="/styles/main.css">
-{{ end }}
+<link rel="stylesheet" href="/styles/main.css">
 
 <!-- Icon -->
 <link rel="apple-touch-icon" sizes="57x57" href="/images/icons/apple-touch-icon-57x57.png">
