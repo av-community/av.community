@@ -6,7 +6,7 @@
     "dev": "gulp dev",
     "generate-favicon": "gulp generate-favicon",
     "watch": "concurrently --kill-others \"npm run watch:hugo\" \"npm run watch:gulp\"",
-    "watch:hugo": "hugo server",
+    "watch:hugo": "gulp hugo:server",
     "watch:gulp": "gulp watch"
   },
   "dependencies": {

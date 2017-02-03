@@ -25,7 +25,9 @@ const AUTOPREFIXER_BROWSERS = ['last 2 versions', '> 1%'];
 const FAVICON_DATA_FILE = 'config/favicons.json';
 
 gulp.task('hugo', shell.task(['hugo']));
-gulp.task('hugo:server', shell.task(['hugo', 'server']));
+gulp.task('hugo:server', shell.task(['hugo server'], {
+  env: { HUGO_STATICDIR: '.tmp' },
+}));
 
 gulp.task('lint', () =>
   gulp.src(['assets/scripts/**/*.js', '!node_modules/**'])
@@ -41,7 +43,7 @@ gulp.task('images', () =>
       interlaced: true,
     })))
     .pipe(size({ title: 'images' }))
-    .pipe(gulp.dest('.tmp/assets/images')),
+    .pipe(gulp.dest('public/assets/images')),
 );
 
 gulp.task('styles', () =>
@@ -54,7 +56,8 @@ gulp.task('styles', () =>
     .pipe(autoprefixer(AUTOPREFIXER_BROWSERS))
     .pipe(cssnano())
     .pipe(size({ title: 'styles' }))
-    .pipe(gulp.dest('.tmp/assets/styles')),
+    .pipe(gulp.dest('.tmp/assets/styles'))
+    .pipe(gulp.dest('public/assets/styles')),
 );
 
 gulp.task('scripts', () =>
@@ -72,7 +75,7 @@ gulp.task('scripts', () =>
       .pipe(uglify({ preserveComments: 'some' }))
       // Output files
       .pipe(size({ title: 'scripts' }))
-      .pipe(gulp.dest('.tmp/assets/scripts')),
+      .pipe(gulp.dest('public/assets/scripts')),
 );
 
 gulp.task('revision', () =>
@@ -104,9 +107,8 @@ gulp.task('clean', () => del(['.tmp', 'public/*', '!public/.git'], { dot: true }
 
 gulp.task('build', ['clean'], cb =>
   runSequence(
-    ['images', 'scripts', 'styles'],
     'hugo',
-    ['html'],
+    ['html', 'images', 'scripts', 'styles'],
     'revision',
     'generate-service-worker',
     cb,

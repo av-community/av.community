@@ -6,7 +6,7 @@ disableHugoGeneratorInject = true
 pygmentscodefences = true
 pygmentsuseclasses = true
 
-staticdir = ".tmp"
+staticdir = false
 
 [params]
 cachebuster = true
