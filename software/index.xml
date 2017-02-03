@@ -2,58 +2,58 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Softwares on av.community</title>
-    <link>https://av.community/software/index.xml</link>
+    <link>/software/index.xml</link>
     <description>Recent content in Softwares on av.community</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <atom:link href="https://av.community/software/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="/software/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>Software</title>
-      <link>https://av.community/software/</link>
+      <link>/software/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://av.community/software/</guid>
+      <guid>/software/</guid>
       <description>&lt;p&gt;This is the software page&lt;/p&gt;
 </description>
     </item>
     
     <item>
       <title>ffmpeg</title>
-      <link>https://av.community/software/ffmpeg/</link>
+      <link>/software/ffmpeg/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://av.community/software/ffmpeg/</guid>
+      <guid>/software/ffmpeg/</guid>
       <description>&lt;p&gt;This is all about ffmpeg&lt;/p&gt;
 </description>
     </item>
     
     <item>
       <title>ffmpeg options</title>
-      <link>https://av.community/software/ffmpeg/options.html/</link>
+      <link>/software/ffmpeg/options/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://av.community/software/ffmpeg/options.html/</guid>
+      <guid>/software/ffmpeg/options/</guid>
       <description>&lt;p&gt;This is a page about ffmpeg options&lt;/p&gt;
 </description>
     </item>
     
     <item>
       <title>x264</title>
-      <link>https://av.community/software/x264/</link>
+      <link>/software/x264/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://av.community/software/x264/</guid>
+      <guid>/software/x264/</guid>
       <description>&lt;p&gt;This is all about x264&lt;/p&gt;
 </description>
     </item>
     
     <item>
       <title>x264 options</title>
-      <link>https://av.community/software/x264/options/</link>
+      <link>/software/x264/options/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://av.community/software/x264/options/</guid>
+      <guid>/software/x264/options/</guid>
       <description>&lt;pre&gt;&lt;code&gt;x264 core:148 r2748 97eaef2
 Syntax: x264 [options] -o outfile infile
 

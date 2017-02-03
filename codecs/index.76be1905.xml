@@ -2,48 +2,48 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Codecs on av.community</title>
-    <link>https://av.community/codecs/index.xml</link>
+    <link>/codecs/index.76be1905.xml</link>
     <description>Recent content in Codecs on av.community</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <atom:link href="https://av.community/codecs/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="/codecs/index.76be1905.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>Audio Codecs</title>
-      <link>https://av.community/codecs/audio/</link>
+      <link>/codecs/audio/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://av.community/codecs/audio/</guid>
+      <guid>/codecs/audio/</guid>
       <description>&lt;p&gt;All about audio codecs&lt;/p&gt;
 </description>
     </item>
     
     <item>
       <title>Codecs</title>
-      <link>https://av.community/codecs/</link>
+      <link>/codecs/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://av.community/codecs/</guid>
+      <guid>/codecs/</guid>
       <description>&lt;p&gt;All about codecs&lt;/p&gt;
 </description>
     </item>
     
     <item>
       <title>Subtitle Codecs</title>
-      <link>https://av.community/codecs/subtitles/</link>
+      <link>/codecs/subtitles/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://av.community/codecs/subtitles/</guid>
+      <guid>/codecs/subtitles/</guid>
       <description>&lt;p&gt;All about subtitle codecs&lt;/p&gt;
 </description>
     </item>
     
     <item>
       <title>Video Codecs</title>
-      <link>https://av.community/codecs/video/</link>
+      <link>/codecs/video/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://av.community/codecs/video/</guid>
+      <guid>/codecs/video/</guid>
       <description>&lt;p&gt;All about video codecs&lt;/p&gt;
 </description>
     </item>

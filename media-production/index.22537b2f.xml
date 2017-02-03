@@ -2,18 +2,18 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Media-productions on av.community</title>
-    <link>https://av.community/media-production/index.xml</link>
+    <link>/media-production/index.22537b2f.xml</link>
     <description>Recent content in Media-productions on av.community</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <atom:link href="https://av.community/media-production/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="/media-production/index.22537b2f.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>Media Production</title>
-      <link>https://av.community/media-production/</link>
+      <link>/media-production/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://av.community/media-production/</guid>
+      <guid>/media-production/</guid>
       <description>&lt;p&gt;Content here&lt;/p&gt;
 </description>
     </item>

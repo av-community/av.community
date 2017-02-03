@@ -2,18 +2,18 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>H264 on av.community</title>
-    <link>https://av.community/tags/h264/index.xml</link>
+    <link>/tags/h264/index.xml</link>
     <description>Recent content in H264 on av.community</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <atom:link href="https://av.community/tags/h264/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="/tags/h264/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>Advanced x264 Encoding Guide</title>
-      <link>https://av.community/guides/advanced-x264-encoding/</link>
+      <link>/guides/advanced-x264-encoding/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://av.community/guides/advanced-x264-encoding/</guid>
+      <guid>/guides/advanced-x264-encoding/</guid>
       <description>
 
 &lt;h2 id=&#34;getting-to-know-your-x264&#34;&gt;Getting to Know Your x264&lt;/h2&gt;
@@ -158,10 +158,10 @@ There are many parameters that you may have seen used in other encodes. More tha
     
     <item>
       <title>H.264 Advanced Guide</title>
-      <link>https://av.community/guides/h264-advanced-guide/</link>
+      <link>/guides/h264-advanced-guide/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://av.community/guides/h264-advanced-guide/</guid>
+      <guid>/guides/h264-advanced-guide/</guid>
       <description>
 
 &lt;p&gt;Source: &lt;a href=&#34;https://app.zencoder.com/docs/guides/encoding-settings/h264-advanced&#34;&gt;https://app.zencoder.com/docs/guides/encoding-settings/h264-advanced&lt;/a&gt;&lt;/p&gt;

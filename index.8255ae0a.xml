@@ -2,19 +2,19 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>av.community</title>
-    <link>https://av.community/index.xml</link>
+    <link>/index.8255ae0a.xml</link>
     <description>Recent content on av.community</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Wed, 01 Feb 2017 20:14:46 -0600</lastBuildDate>
-    <atom:link href="https://av.community/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="/index.8255ae0a.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>10-Bit H.264</title>
-      <link>https://av.community/guides/10-bit-h264/</link>
+      <link>/guides/10-bit-h264/</link>
       <pubDate>Wed, 01 Feb 2017 20:14:46 -0600</pubDate>
       
-      <guid>https://av.community/guides/10-bit-h264/</guid>
+      <guid>/guides/10-bit-h264/</guid>
       <description>&lt;p&gt;Source: &lt;a href=&#34;https://gist.github.com/l4n9th4n9/4459997&#34;&gt;https://gist.github.com/l4n9th4n9/4459997&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;For all those who haven&amp;rsquo;t heard of it already, here&amp;rsquo;s a quick rundown about the
@@ -179,10 +179,10 @@ Calculating effort aside is it better to encode a x264 8-bit high-bitrate source
     
     <item>
       <title>About</title>
-      <link>https://av.community/about/</link>
+      <link>/about/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://av.community/about/</guid>
+      <guid>/about/</guid>
       <description>
 
 &lt;h2 id=&#34;why&#34;&gt;Why&lt;/h2&gt;
@@ -197,10 +197,10 @@ Calculating effort aside is it better to encode a x264 8-bit high-bitrate source
     
     <item>
       <title>Advanced x264 Encoding Guide</title>
-      <link>https://av.community/guides/advanced-x264-encoding/</link>
+      <link>/guides/advanced-x264-encoding/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://av.community/guides/advanced-x264-encoding/</guid>
+      <guid>/guides/advanced-x264-encoding/</guid>
       <description>
 
 &lt;h2 id=&#34;getting-to-know-your-x264&#34;&gt;Getting to Know Your x264&lt;/h2&gt;
@@ -345,20 +345,20 @@ There are many parameters that you may have seen used in other encodes. More tha
     
     <item>
       <title>Audio Codecs</title>
-      <link>https://av.community/codecs/audio/</link>
+      <link>/codecs/audio/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://av.community/codecs/audio/</guid>
+      <guid>/codecs/audio/</guid>
       <description>&lt;p&gt;All about audio codecs&lt;/p&gt;
 </description>
     </item>
     
     <item>
       <title>Authoring a Professional Blu-ray Disc with x264</title>
-      <link>https://av.community/guides/authoring-a-professional-bluray-disc-with-x264/</link>
+      <link>/guides/authoring-a-professional-bluray-disc-with-x264/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://av.community/guides/authoring-a-professional-bluray-disc-with-x264/</guid>
+      <guid>/guides/authoring-a-professional-bluray-disc-with-x264/</guid>
       <description>
 
 &lt;p&gt;Source: &lt;a href=&#34;http://www.x264bluray.com/home/&#34;&gt;http://www.x264bluray.com/home/&lt;/a&gt;&lt;/p&gt;
@@ -702,10 +702,10 @@ Replace &amp;ndash;sar 16:11 with &amp;ndash;sar 12:11 if you require a 4:3 Disp
     
     <item>
       <title>Chroma Subsampling</title>
-      <link>https://av.community/guides/chroma-subsampling/</link>
+      <link>/guides/chroma-subsampling/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://av.community/guides/chroma-subsampling/</guid>
+      <guid>/guides/chroma-subsampling/</guid>
       <description>
 
 &lt;p&gt;Source: &lt;a href=&#34;https://en.wikipedia.org/wiki/Chroma_subsampling&#34;&gt;https://en.wikipedia.org/wiki/Chroma_subsampling&lt;/a&gt;&lt;/p&gt;
@@ -869,30 +869,30 @@ This notation is not valid for all combinations and has exceptions, e.g. 4:1:0 (
     
     <item>
       <title>Codecs</title>
-      <link>https://av.community/codecs/</link>
+      <link>/codecs/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://av.community/codecs/</guid>
+      <guid>/codecs/</guid>
       <description>&lt;p&gt;All about codecs&lt;/p&gt;
 </description>
     </item>
     
     <item>
       <title>Containers</title>
-      <link>https://av.community/containers/</link>
+      <link>/containers/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://av.community/containers/</guid>
+      <guid>/containers/</guid>
       <description>&lt;p&gt;All about containers&lt;/p&gt;
 </description>
     </item>
     
     <item>
       <title>Getting Started</title>
-      <link>https://av.community/getting-started/</link>
+      <link>/getting-started/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://av.community/getting-started/</guid>
+      <guid>/getting-started/</guid>
       <description>&lt;p&gt;This is the getting started page&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-javascript&#34; data-lang=&#34;javascript&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;kr&#34;&gt;import&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;test&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;from&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;test&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
 
@@ -903,10 +903,10 @@ This notation is not valid for all combinations and has exceptions, e.g. 4:1:0 (
     
     <item>
       <title>H.264 Advanced Guide</title>
-      <link>https://av.community/guides/h264-advanced-guide/</link>
+      <link>/guides/h264-advanced-guide/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://av.community/guides/h264-advanced-guide/</guid>
+      <guid>/guides/h264-advanced-guide/</guid>
       <description>
 
 &lt;p&gt;Source: &lt;a href=&#34;https://app.zencoder.com/docs/guides/encoding-settings/h264-advanced&#34;&gt;https://app.zencoder.com/docs/guides/encoding-settings/h264-advanced&lt;/a&gt;&lt;/p&gt;
@@ -999,10 +999,10 @@ This notation is not valid for all combinations and has exceptions, e.g. 4:1:0 (
     
     <item>
       <title>How Codecs Work</title>
-      <link>https://av.community/guides/how-codecs-work/</link>
+      <link>/guides/how-codecs-work/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://av.community/guides/how-codecs-work/</guid>
+      <guid>/guides/how-codecs-work/</guid>
       <description>&lt;p&gt;Source: &lt;a href=&#34;https://vimeo.com/104554788&#34;&gt;https://vimeo.com/104554788&lt;/a&gt;&lt;/p&gt;
 
 &lt;iframe src=&#34;https://player.vimeo.com/video/104554788&#34; width=&#34;640&#34; height=&#34;360&#34; frameborder=&#34;0&#34; webkitallowfullscreen mozallowfullscreen allowfullscreen&gt;&lt;/iframe&gt;
@@ -1013,40 +1013,40 @@ This notation is not valid for all combinations and has exceptions, e.g. 4:1:0 (
     
     <item>
       <title>Media Production</title>
-      <link>https://av.community/media-production/</link>
+      <link>/media-production/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://av.community/media-production/</guid>
+      <guid>/media-production/</guid>
       <description>&lt;p&gt;Content here&lt;/p&gt;
 </description>
     </item>
     
     <item>
       <title>Media Storage</title>
-      <link>https://av.community/media-storage/</link>
+      <link>/media-storage/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://av.community/media-storage/</guid>
+      <guid>/media-storage/</guid>
       <description>&lt;p&gt;Content here&lt;/p&gt;
 </description>
     </item>
     
     <item>
       <title>Physical Media</title>
-      <link>https://av.community/physical-media/</link>
+      <link>/physical-media/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://av.community/physical-media/</guid>
+      <guid>/physical-media/</guid>
       <description>&lt;p&gt;All about physical media&lt;/p&gt;
 </description>
     </item>
     
     <item>
       <title>Remuxing</title>
-      <link>https://av.community/guides/remuxing/</link>
+      <link>/guides/remuxing/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://av.community/guides/remuxing/</guid>
+      <guid>/guides/remuxing/</guid>
       <description>
 
 &lt;p&gt;Source: &lt;a href=&#34;https://sites.google.com/site/xorphdstuff/remuxing&#34;&gt;https://sites.google.com/site/xorphdstuff/remuxing&lt;/a&gt;&lt;/p&gt;
