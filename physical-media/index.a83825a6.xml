@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Physical-media on av.community</title>
+    <link>https://av.community/physical-media/index.xml</link>
+    <description>Recent content in Physical-media on av.community</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <atom:link href="https://av.community/physical-media/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Physical Media</title>
+      <link>https://av.community/physical-media/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://av.community/physical-media/</guid>
+      <description>&lt;p&gt;All about physical media&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

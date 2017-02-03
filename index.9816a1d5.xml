@@ -1,0 +1,1528 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>av.community</title>
+    <link>https://av.community/index.xml</link>
+    <description>Recent content on av.community</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 01 Feb 2017 20:14:46 -0600</lastBuildDate>
+    <atom:link href="https://av.community/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>10-Bit H.264</title>
+      <link>https://av.community/guides/10-bit-h264/</link>
+      <pubDate>Wed, 01 Feb 2017 20:14:46 -0600</pubDate>
+      
+      <guid>https://av.community/guides/10-bit-h264/</guid>
+      <description>&lt;p&gt;Source: &lt;a href=&#34;https://gist.github.com/l4n9th4n9/4459997&#34;&gt;https://gist.github.com/l4n9th4n9/4459997&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;For all those who haven&amp;rsquo;t heard of it already, here&amp;rsquo;s a quick rundown about the
+newest trend in making our encodes unplayable on even more systems: So-called
+high-bit-depth H.264. So, why another format, and what makes this stuff
+different from what you know already?&lt;/p&gt;
+
+&lt;p&gt;First off: What is bit depth?&lt;/p&gt;
+
+&lt;p&gt;In short, bit depth is the level of precision that&amp;rsquo;s available for storing color
+information. The encodes you&amp;rsquo;re used to have a precision of 8 bits (256 levels)
+per color channel. There are usually three color channels, so that makes a bit
+depth of 24 bits per pixel, which is also the most commonly used bit depth of
+modern desktop PCs. Now, you can use a higher bit depth for video encoding, and
+x264 currently allows up to 10 bits per channel (1024 levels and 30
+bits per pixel), and of course that allows for much higher precision.
+But: Most graphics cards and display devices don&amp;rsquo;t allow more than 24 bits per
+pixel.&lt;/p&gt;
+
+&lt;p&gt;This makes higher bit depth sound pretty pointless, so why are we doing this?
+Here&amp;rsquo;s a bit of side info: Most LCD displays (TN panels to be precise) can only
+represent a bit depth of 6 bits per channel (a mere 64 levels). This would look
+pretty awful under normal circumstances, so these displays use a little trick
+called &amp;ldquo;dithering&amp;rdquo; to simulate a bit depth of 8 bits per channel. In simplified
+terms, this means that the panel&amp;rsquo;s controller quickly alternates between the
+nearest colors in a dynamic pattern. When done correctly, this creates the
+illusion of a higher color accuracy than what the panel is actually capable of
+displaying.&lt;/p&gt;
+
+&lt;p&gt;The exact same trick can be used to display high-bit-depth encodes.&lt;/p&gt;
+
+&lt;p&gt;But by that logic, couldn&amp;rsquo;t we just encode with 8 bits and hardcode that
+dithering?&lt;/p&gt;
+
+&lt;p&gt;Of course that&amp;rsquo;s possible, and in fact we&amp;rsquo;re already doing this to prevent
+so-called banding (&lt;a href=&#34;http://en.wikipedia.org/wiki/Colour_banding&#34;&gt;http://en.wikipedia.org/wiki/Colour_banding&lt;/a&gt;).
+But this also has a big drawback: The bitrate required to keep the dithering
+intact is disproportionately high.&lt;/p&gt;
+
+&lt;p&gt;This brings us to the real advantage of higher bit depths: We can save bandwidth
+even if the source only uses 8 bits per channel.&lt;/p&gt;
+
+&lt;p&gt;That&amp;rsquo;s right: Not only do we no longer need to hardcode any dithering, but higher
+bit depth also means higher error tolerance. Losing one bit of information in
+an 8-bit color space is equivalent to losing three bits in a 10-bit color space,
+and thus the same quality can be achieved with less bitrate. Want an example?
+One of my first tests was encoding episode 13 of Shakugan no Shana from a DVD
+source, with dithering added to prevent banding. I used the exact same input and
+settings for both encodes.&lt;/p&gt;
+
+&lt;p&gt;The video track of the 8-bit encode has 275 MiB, while the 10-bit encode has no
+more than 152 MiB and doesn&amp;rsquo;t look worse at all &amp;ndash; in fact, it even looks better
+than the much larger 8-bit encode.&lt;/p&gt;
+
+&lt;p&gt;Now, if I hadn&amp;rsquo;t hardcoded the dithering for the 10-bit encode and instead
+passed a high-bit-depth picture to x264, it would&amp;rsquo;ve resulted in even better
+perceived quality and an even smaller file size!&lt;/p&gt;
+
+&lt;p&gt;That&amp;rsquo;s terrific, but there has to be a catch to this, right?
+Unfortunately, yes. Software support is currently lacking in a lot of places,
+but it&amp;rsquo;s being worked on. Decoders that don&amp;rsquo;t support higher bit depths don&amp;rsquo;t
+simply fail to decode anything, but decode wrong information, which leads to
+really annoying artifacts: &lt;a href=&#34;http://screenshots.srsfckn.biz/10bit-decodefail.png&#34;&gt;http://screenshots.srsfckn.biz/10bit-decodefail.png&lt;/a&gt;
+Note that also none of the available hardware accelerated decoders (VDPAU, DXVA,
+CUVID, etc.) support this.&lt;/p&gt;
+
+&lt;p&gt;Currently, you have the following options for playing such content:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;MPlayer2 (cross-platform, Windows builds at &lt;a href=&#34;http://mplayer2.srsfckn.biz&#34;&gt;http://mplayer2.srsfckn.biz&lt;/a&gt;).  You might want to use SMPlayer as GUI (&lt;a href=&#34;http://smplayer.srsfckn.biz&#34;&gt;http://smplayer.srsfckn.biz&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;VLC (cross-platform, use the nightly builds at &lt;a href=&#34;http://nightlies.videolan.org/build/win32/last/&#34;&gt;http://nightlies.videolan.org/build/win32/last/&lt;/a&gt;).  It&amp;rsquo;s not as bad as it used to be, seriously.&lt;/li&gt;
+&lt;li&gt;CCCP Beta (&lt;a href=&#34;http://www.cccp-project.net/beta/&#34;&gt;http://www.cccp-project.net/beta/&lt;/a&gt;) Note that this is currently a CCCP exclusive feature, so you will not get this by simply installing the most recent ffdshow-tryouts.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;And what does this all mean for my precious fagsubs?&lt;/p&gt;
+
+&lt;p&gt;It means that we&amp;rsquo;re doing dual encodes until compatible software is more readily
+available (i.e. CCCP supports it in a release build), but it also implies the
+following:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;much smaller encodes with the same or better perceived quality&lt;/li&gt;
+&lt;li&gt;slightly smaller but better looking encodes&lt;/li&gt;
+&lt;li&gt;same file size but much better quality, right up to transparency (&lt;a href=&#34;http://en.wikipedia.org/wiki/Transparency_(data_compression)&#34;&gt;http://en.wikipedia.org/wiki/Transparency_(data_compression)&lt;/a&gt;)&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;So, things can only get better! I&amp;rsquo;ll keep you posted.&lt;/p&gt;
+
+&lt;p&gt;============================JEEB&amp;rsquo;s Rant=================================&lt;/p&gt;
+
+&lt;p&gt;Just a quickie on current 10bit H.264 support:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;ffmpeg/libav have now had it for ~months (made by irock, they now have asm optimizations by Jumpyshoes)&lt;/li&gt;
+&lt;li&gt;mplayer(2) has had support for some time now ( these builds recommended, can be used with smplayer if you need a front-end )&lt;/li&gt;
+&lt;li&gt;VLC will have it in their next release ( you can test with nightlies from here )&lt;/li&gt;
+&lt;li&gt;Lord patched it into FFDShow-tryouts (and I undumbed its swscale usage flags so that RGB output wouldn&amp;rsquo;t look like crap). It should work fine&amp;rsquo;ish, although we are still scratching off some rough edges. Like the fact that it seems like we&amp;rsquo;ve stumbled onto a bug in VSFilter not really having as correct color conversions as possible inside. Of course, whether or not the effects of this bug are visible to people is a whole separate affair. Regardless, we&amp;rsquo;re working on it.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;What is this whole &amp;ldquo;10bit&amp;rdquo; affair?&lt;/p&gt;
+
+&lt;p&gt;Higher-than-8bit colorspaces are part of the H.264 standard, usually until now only
+used in the &amp;ldquo;professional&amp;rdquo; zone. It&amp;rsquo;s not really anything new, and there actually was
+at least one DirectShow decoder for it available on the internet before libavcodec
+got one (trivia: MainConcept&amp;rsquo;s broadcast decoder). It just wasn&amp;rsquo;t picked up by the
+media companies for the masses, where the choice went towards Blu-ray just hitting
+the source with immense amounts of bitrate paired with 8bit (and thus no open source
+entrepreneur had yet taken it into his or her TODO list until irock developed 10bit
+encoding routines into x264 during last year&amp;rsquo;s GSoC program).&lt;/p&gt;
+
+&lt;p&gt;Unlike what would probably come to your mind first when thinking about &amp;ldquo;higher bit
+depth in color&amp;rdquo;, its biggest merit for most of the people is not in the capability
+of actually having a way to keep 10bit things 10bit (as most people pretty much have
+no way of getting such content originally), or in the fact that you could use hyper
+special rendering straight onto a 30bit display or whatever. It&amp;rsquo;s compression.&lt;/p&gt;
+
+&lt;p&gt;Even if your source is originally 8bit, encoding it in 10bit (in case of lossy
+compression, of course — otherwise the &amp;ldquo;redundant&amp;rdquo; data will actually start biting
+us. Although the output of course wouldn&amp;rsquo;t be identical compared to the 8bit source
+either in such a case, either) will have the merit of making the output suffer less
+from various compression artifacts. In layman&amp;rsquo;s terms, this means that lossy
+compression will be more efficient in leaving things pretty, leading to smaller
+files looking better in the end (Ateme&amp;rsquo;s PDF on this).&lt;/p&gt;
+
+&lt;p&gt;Not to mention that even if one converts the 10bit picture into a 8bit one to make
+it easier to deal with (for such stuff as playback etc.), the difference is usually
+miniscule (after all, we are in the same 4:2:0 colorspace), or might even look better
+as some ways of conversion use dithering in the process.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;Thanks as well! Very good explanation!
+Does kind of the same apply to 12-bit transcodes?
+Calculating effort aside is it better to encode a x264 8-bit high-bitrate source to x265 10-bit or 12-bit; purely on grounds of subjective quality / Filesize?&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;This seems to be a repost of an old post but let me just say this here once again because it still makes my blood boil: DISK SPACE IS CHEAP. It is cheap now and it certainly was cheap years ago even before the hi10p fad was imposed on the entire community. The amount of pain and inconvenience this whole hi10p &amp;ldquo;decision&amp;rdquo; has brought is completely unjustified when you consider the supposed benefits. If after all this the best thing you can say for yourself is that you helped people save some space then this is not even funny: it&amp;rsquo;s just a fucking tragedy. To top it off most people won&amp;rsquo;t ever see the difference on the actual image being reproduced. So let&amp;rsquo;s see where this leaves us: people STILL can&amp;rsquo;t play their hi10p anime on their iPhones, Android phones or tablets, iPads, Apple TV, Fire TV, chromecast or any Android box. Not even the most powerful Android TV device yet (the Nvidia Shield) has a perfect hi10p playback. So essentially you still need a computer to play it. In this day and age when everybody is cord-cutting and we can consume our multimedia seamlessly on any device we STILL would need to power on our computer to watch this stuff. The icing on the cake is that if 10bit is what they needed they could easily move to x265 10bit, a standard that it&amp;rsquo;s actually being supported by almost every hardware manufacturer worth naming but then I remember that the purpose is to inconvenience the most people possible so it makes sense that they haven&amp;rsquo;t moved to that standard yet. I hope you&amp;rsquo;re all happy.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;By &amp;lsquo;perfect playback&amp;rsquo;, what do you mean? I&amp;rsquo;m asking honestly and not jabbing you. I&amp;rsquo;m trying to gain some insight into h.265.&lt;/p&gt;
+
+&lt;p&gt;I&amp;rsquo;m quite the noob with h.265/HEVC but recently purchased the Shield and have been busy doing the grunt work transcoding my discs and using Plex as the server. I heard the Shield had HEVC decoding on the hardware so I&amp;rsquo;ve been experimenting to see what benefits or limitations there are, trying every encoding profile and option. On low end PCs, I can&amp;rsquo;t even view an HEVC video directly in VLC. But, those same PCs can stream it just fine thru Plex without transcoding, even at 10-bit. I&amp;rsquo;ve had numerous Android phones and Win10 PCs streaming at the same time, all with varying levels of CPU, and they can all play these videos. I have an older phone that always triggers transcoding, but the server did the heavy lifting on on that. I&amp;rsquo;m not going to try them directly, though. Copying a 12GB encoding of Avatar to a phone doesn&amp;rsquo;t make sense.&lt;/p&gt;
+
+&lt;p&gt;Visually, the h.265 files mostly look like the h.264. I have to use &amp;lsquo;mostly&amp;rsquo; because there is one issue I can&amp;rsquo;t seem to overcome, yet. (the noob blues) The original X-Men has a lot of dimly lit scenes and they look horrible in h.265. In the end, it doesn&amp;rsquo;t make sense to throw HEVC at that one anyway just to save a GB.&lt;/p&gt;
+
+&lt;p&gt;I need to counter, though, about the disk space being cheap. That&amp;rsquo;s only for certain systems. If I was going the dedicated PC or NAS route, yes, it would be quite easy to get into the double-digit TB range inexpensively. But, not everybody is going to do that. Most devices are going to have a relatively small (&amp;lt;500GB) storage footprint, ranging from phones and tablets (&amp;lt;=128GB) to laptops (&amp;lt;500GB). Newer laptops have extra space if you specifically add it but most people don&amp;rsquo;t. I have a 1TB secondary drive in mine and completely filled that up during this ripping project. So I started adding some 2TB USB drives. To get ones that look good next to the Shield, I&amp;rsquo;m somewhat limited as to the max space I can have there. Even when you look at enterprise decisions, small savings in space yield tremendous gains. Wasn&amp;rsquo;t it Dropbox that recently announced they&amp;rsquo;re re-encoding JPEGs now with their own internal proprietary compression to gain a 20% increase in space that resulted in PB of storage freed up. If I stuck to DVDs, I think I could maintain this. The growth rate of small USB drives and flash sticks is going to outpace the space I would need. But blu-ray discs are a different beast entirely. I&amp;rsquo;m working with 1080p only and h.265 Avatar was a 12GB, far larger with h.264. 10 epic BD movies will eat up a significant portion of a 1TB drive. I haven&amp;rsquo;t purchased one yet, but I&amp;rsquo;m itching to see what a 4K BD looks like. When presented with those file size options, I don&amp;rsquo;t know if drives in my form factor will scale and still be considered cheap.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;Other Resources&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://x264.nl/x264/10bit_01-ateme_pierre_larbier_422_10-bit.pdf&#34;&gt;http://x264.nl/x264/10bit_01-ateme_pierre_larbier_422_10-bit.pdf&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://x264.nl/x264/10bit_02-ateme-why_does_10bit_save_bandwidth.pdf&#34;&gt;http://x264.nl/x264/10bit_02-ateme-why_does_10bit_save_bandwidth.pdf&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://x264.nl/x264/10bit_03-422_10_bit_pristine_video_quality.pdf&#34;&gt;http://x264.nl/x264/10bit_03-422_10_bit_pristine_video_quality.pdf&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.ateme.com/technology-leadership/knowledge-center/white-papers&#34;&gt;https://www.ateme.com/technology-leadership/knowledge-center/white-papers&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>About</title>
+      <link>https://av.community/about/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://av.community/about/</guid>
+      <description>
+
+&lt;h2 id=&#34;why&#34;&gt;Why&lt;/h2&gt;
+
+&lt;p&gt;Because all the info was spread everywhere&lt;/p&gt;
+
+&lt;h2 id=&#34;who&#34;&gt;Who&lt;/h2&gt;
+
+&lt;p&gt;Jacob Gillespie and the community&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Advanced x264 Encoding Guide</title>
+      <link>https://av.community/guides/advanced-x264-encoding/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://av.community/guides/advanced-x264-encoding/</guid>
+      <description>
+
+&lt;h2 id=&#34;getting-to-know-your-x264&#34;&gt;Getting to Know Your x264&lt;/h2&gt;
+
+&lt;p&gt;x264 is a harsh mistress. Despite mostly being used to compress movies, it is for some reason highly optimized for anime tentacle porn. On top of that, there is no built-in gui for beginners and the available documentation seems only to exist so that it may taunt and humiliate the average person. Well fear not! Even though I haven&amp;rsquo;t encoded anything for the site in probably over a year, I&amp;rsquo;m here to guide you through (most of) x264&amp;rsquo;s meaningful parameters so you can become better at encoding. And as a bonus, writing this will keep the staff from demoting me to a userclass where the rest of you filthy swine reside. So, without further ado&amp;hellip;&lt;/p&gt;
+
+&lt;h2 id=&#34;ref&#34;&gt;Ref&lt;/h2&gt;
+
+&lt;p&gt;This is a no-brainer parameter that requires no testing but is critical for yielding the highest possible quality without breaking standalone device (Popcorn Hour, WDTV Live, Roku) playback. Taken directly from the HD encoding guide:&lt;/p&gt;
+
+&lt;p&gt;Once you have cropped your source in AvsPmod or whatever other script editor you are using, take the equation 8388608 / (width after cropping x height after cropping), inputting your source&amp;rsquo;s width and height in what I hope are obvious enough placeholders. Take the result and round it down to the nearest whole number. This is the number you are to use for the &lt;code&gt;--ref&lt;/code&gt; setting.&lt;/p&gt;
+
+&lt;p&gt;If you use a number larger than what the formula yields for a 720p or 1080p encode, it will still play but will only look slightly better and will not play on standalone devices.&lt;/p&gt;
+
+&lt;p&gt;If you are encoding to a Standard Definition resolution (i.e. smaller than 720p), you may skip the math and simply use 16 as your ref number.&lt;/p&gt;
+
+&lt;p&gt;Keep in mind that by design, you cannot use a number larger than 16 here.&lt;/p&gt;
+
+&lt;h2 id=&#34;b-frames&#34;&gt;B-frames&lt;/h2&gt;
+
+&lt;p&gt;B-frames have a fair amount of control over the compressibility (size) of your encode. More bframes = longer encoding time but also smaller file sizes. But you cannot exactly force more bframes into an encode if x264 decides it doesn&amp;rsquo;t need them&amp;hellip; well, not without using b-bias and catastrophically breaking things. Anyway, the ideal number of b-frames needed for an encode can be determined in a single test encode. And by &amp;lsquo;single&amp;rsquo; I mean you&amp;rsquo;ll need to use the avisynth filter SelectRangeEvery() to grab a few thousand frames to test using &lt;code&gt;--bframes 16&lt;/code&gt;. x264 will spit out a log file when the test encode is done. Somewhere in this log will be a line that looks like this:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;x264 [info]: consecutive B-frames: 0.5% 1.1% 3.6% 24.0% 14.4% 43.3% 4.0% 3.4% 1.1% 1.4% 0.5% 0.9% 0.3% 0.3% 0.2% 0.9% 0.1%
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;There are 17 values listed. Each one represents a specific number of b-frames, from 0 to 16. Each value shows the percentage of total frames that were able to make use of that number of consecutive b-frames. From these numbers I usually select the largest one ≥ 1.0% but have made exceptions for 0.9% values.&lt;/p&gt;
+
+&lt;h2 id=&#34;crf-and-2-pass&#34;&gt;CRF and 2-Pass&lt;/h2&gt;
+
+&lt;p&gt;Whether you choose to encode crf or 2-pass, this setting will have the most significant impact on your encode&amp;rsquo;s overall quality. With 2-pass, you choose a bitrate. With crf you choose a quality level in the form of a numerical rate factor. The bitrate/quality will vary throughout the extent of whatever you are encoding, but will average out to whatever your input for this value was.&lt;/p&gt;
+
+&lt;p&gt;CRF and 2-pass use the exact same algorithm and therefore there is literally no advantage to using one over the other. If a crf 20 encode gives you an average bitrate of 6000 kbps, a 2-pass encode @ 6000 kbps will yield the exact same quality. Additionally, the log from the first pass of a 2-pass encode will give you the equivalent rate factor one would use for a crf encode.&lt;/p&gt;
+
+&lt;p&gt;Again, there is NO advantage to either method. Many people prefer 2-pass due to not fully understanding how to use the next setting I&amp;rsquo;ll go over. Others will do test encodes with both crf and 2-pass to achieve ideal quality. My preference happens to be crf, but only because I feel that bitrate / filesize should be irrelevant and picture quality should never be compromised. Then again, everything I&amp;rsquo;ve ever encoded is like 400 GB&amp;hellip;&lt;/p&gt;
+
+&lt;p&gt;Reasonable bitrates for 2-pass/crf will vary depending on your source and a few other settings. I can&amp;rsquo;t say much on bitrate, but crf should nearly always be between 16 and 23.&lt;/p&gt;
+
+&lt;h2 id=&#34;qcomp&#34;&gt;QComp&lt;/h2&gt;
+
+&lt;p&gt;While crf and 2-pass affect the overall quality of the encode, qcomp affects how crf and 2-pass are applied. Next to crf/2-pass it is the most important x264 parameter for afecting the quality of your final encode. qcomp will always be a number between 0.0 and 1.0. At 0.0, your crf number or 2-pass bitrate will yield a constant bitrate throughout the entire encode. At 1.0, the encode&amp;rsquo;s bitrate variance is completely uncapped and so will flail around like a crack-addicted preschooler.&lt;/p&gt;
+
+&lt;p&gt;The default is 0.6 but for live-action should be bumped to 0.7, or 0.75 for sources with a lot of grain/noise. For lower quality sources with little or no grain, low-quality animation or dark movies without much grain you can try around 0.55 or 0.5. Essentially the viable qcomp range for any source will be (roughly) 0.45 - 0.75.&lt;/p&gt;
+
+&lt;p&gt;This is a setting where testing multiple values is definitely worth it.&lt;/p&gt;
+
+&lt;h2 id=&#34;me-and-merange&#34;&gt;ME and MERange&lt;/h2&gt;
+
+&lt;p&gt;ME (Motion estimation) and MERange (Motion estimation range) help x264 predict motion across frames and compress at a higher level of quality based on the information these two parameters allow it to gather. The higher the quality of the motion estimation algorithm and the higher the motion estimation range, the greater the quality yielded. BUT this also means increased encoding time. Also, as expected, you&amp;rsquo;ll begin to see diminishing returns with respect to quality as you increase these two parameters.&lt;/p&gt;
+
+&lt;p&gt;For our purposes however, these two parameters are dead simple. If your computer has an older/slower processor, use &lt;code&gt;--me umh --merange 24&lt;/code&gt;. These were determined to be the best tradeoff between quality and encoding time, and umh is highly capable of yielding the kind of quality you should be striving for. However, for those of you with faster hardware that want a bit more quality: &lt;code&gt;--me tesa --merange 16&lt;/code&gt; is the final word here.&lt;/p&gt;
+
+&lt;h2 id=&#34;aq-mode&#34;&gt;AQ-Mode&lt;/h2&gt;
+
+&lt;p&gt;&lt;code&gt;--aq-mode&lt;/code&gt; affects how the next setting we&amp;rsquo;ll discuss, &lt;code&gt;--aq-strength&lt;/code&gt;, is applied. There are three options available to you. &lt;code&gt;--aq-mode 2&lt;/code&gt; was supposed to replace mode 1, but is one of those things that appears to have been optimized at least slightly for anime tentacle porn. Mode 2 should work better on lower quality sources or those that have very little grain. For everything else, you&amp;rsquo;ll want to use &lt;code&gt;--aq-mode 1&lt;/code&gt;. It&amp;rsquo;s not perfect but as of right now there is no better alternative. It works well enough. Please note that &lt;code&gt;--aq-mode 0&lt;/code&gt; disables &lt;code&gt;--aq-strength&lt;/code&gt; entirely and should never be used.&lt;/p&gt;
+
+&lt;h2 id=&#34;aq-strength&#34;&gt;AQ-Strength&lt;/h2&gt;
+
+&lt;p&gt;In any given frame, x264 gives priority (more bitrate) to higher-quality macroblocks. &lt;code&gt;--aq-strength&lt;/code&gt; determines the magnitude of that priority. 1.00 is the default. Anything above 1.00 will, increasingly, give more and more priority to lower-quality macroblocks. Lower than 1.00 will give more priority to higher-quality macroblocks. Generally everything you encode should have an &lt;code&gt;--aq-strength&lt;/code&gt; between 0.50 and 1.30.&lt;/p&gt;
+
+&lt;p&gt;Higher quality sources and sources with more grain/noise will benefit from lower &lt;code&gt;--aq-strength&lt;/code&gt; values.&lt;/p&gt;
+
+&lt;p&gt;Lower quality sources, non-HD sources, etc should benefit more from higher values.&lt;/p&gt;
+
+&lt;h2 id=&#34;mbtree&#34;&gt;MBTree&lt;/h2&gt;
+
+&lt;p&gt;While most of what x264 does handles compression within a given frame, mbtree looks to compress information across frames. Yet another x264 parameter dreamt up to improve anime tentacle porn compression, mbtree is a solid idea that actually performs quite poorly on most higher quality live-action sources.&lt;/p&gt;
+
+&lt;p&gt;This parameter is enabled by default but can be turned off with &lt;code&gt;--no-mbtree&lt;/code&gt;. MBTree should be turned off for any source with even a modest amount of grain/noise. It will help on lower-quality sources, many DVDs, anything shot on a digital camera (The Social Network, District 9, etc), but due to the somewhat random nature of video grain, will significantly increase an encode&amp;rsquo;s bitrate if the source was grainy/noisy.&lt;/p&gt;
+
+&lt;p&gt;RC-Lookahead is another x264 setting that directly affects how many frames mbtree takes into consideration during an encode. This is important as mbtree is known for performing badly in scene fades (fading to or from black). To mitigate this, I recommend using &lt;code&gt;--rc-lookahead 250&lt;/code&gt; on literally every encode you do that uses mbtree. The only downside to this is that if your computer has 2 GB of memory or less, it will be somewhat unusable during the encoding process.&lt;/p&gt;
+
+&lt;p&gt;It should be noted that qcomp affects how mbtree is applied, but not in a way that your usage of mbtree should affect your decisions with qcomp in any way whatsoever.&lt;/p&gt;
+
+&lt;h2 id=&#34;psy-rdo-and-psy-trellis&#34;&gt;Psy-RDO and Psy-Trellis&lt;/h2&gt;
+
+&lt;p&gt;These two settings are controlled by a single parameter, in the format &lt;code&gt;--psy-rd x.xx:y.yy&lt;/code&gt;. Psy-RDO is x.xx and Psy-Trellis is y.yy Psy-RDO should be used on any source that isnt completely devoid of grain. Psy-Trellis is an unwieldy bastard that can either save a reasonable amount of bitrate or destroy picture quality.&lt;/p&gt;
+
+&lt;p&gt;Technically, psy-rdo lowers picture quality on a mathematical level. But it also applies a layer of noise to the encode in a way that increases the perceived complexity of the video. Given that noise/grain in any given source is somewhat random to begin with, this is actually a good thing. It increases the visually perceived quality level while allowing the overall bitrate/filesize to be decreased.&lt;/p&gt;
+
+&lt;p&gt;Psy-rdo also assumes that grain was applied evenly throughout each frame in the source. Psy-trellis does not, and is useful if you have a source where parts of a frame are grainier than others. If you can look through a source and see that grain is blanketed evenly throughout each frame, it is probably better to keep psy-trellis disabled. Otherwise, you should test psy-trellis.&lt;/p&gt;
+
+&lt;p&gt;Psy-RDO is mostly just about grain matching. For most live-action, generally a value between 0.90 and 1.30 will suffice. For most animation, 0.50 to 0.90 is a good testing range. Once you have found your source&amp;rsquo;s ideal psy-rdo value, you can test psy-trellis. I recommend running 6 test encodes with psy trellis: 0.05, 0.10, 0.15, 0.20, 0.25 and 0.30. The 6 test encodes should be a few thousand frames long, again using SelectRangeEvery(), and should be compared against a test encode with psy-trellis disabled. If one of the encodes with psy-trellis enabled looks the best, leave that psy-trellis value but do a few tests with slight changes to psy-rdo.&lt;/p&gt;
+
+&lt;h2 id=&#34;deblock&#34;&gt;Deblock&lt;/h2&gt;
+
+&lt;p&gt;Deblock smooths out the blockiness that can occur in a lower-quality source or occasionally in a lower-quality x264 encode. Deblock consists of two numbers. The first number is the strength of the deblocking filter, and the second is the threshold at which the filter decides whether something is a block or detail that needs to be preserved. Generally you should use &lt;code&gt;--deblock -3,-3&lt;/code&gt; for everything that isnt a terrible quality source. You can go below &lt;code&gt;-3,-3&lt;/code&gt; (as low as &lt;code&gt;-6,-6&lt;/code&gt;) if you want, but I wouldn&amp;rsquo;t recommend that unless you&amp;rsquo;re a huge fan of placebos or your television is by far the most expensive thing you own.&lt;/p&gt;
+
+&lt;h2 id=&#34;ssim&#34;&gt;SSIM&lt;/h2&gt;
+
+&lt;p&gt;Adding &lt;code&gt;--ssim&lt;/code&gt; to your x264 parameters can be useful for test encodes. It will give you data on ssim/db which will give you a fairly accurate numerical representation of fidelity with respect to your source. This number becomes more useful when comparing multiple test encodes, and much less useful if the encode(s) used psy-rdo in any way. Please take note that when trying to reach visual transparency, db is a better choice over ssim simply for the fact that it follows a linear scale as it approaches 100% transparency, while ssim follows a logarithmic scale which by design devalues visual improvement increasingly as you approach transparency.&lt;/p&gt;
+
+&lt;h2 id=&#34;vf&#34;&gt;VF&lt;/h2&gt;
+
+&lt;p&gt;&lt;code&gt;--vf&lt;/code&gt; aka video filter, is an early attempt at replacing core avisynth filters with filters built-in to x264. Avisynth is a critical part of video encoding but also a significant bottleneck in terms of encoding time and is the only real hurdle keeping x264 encoding from being viable on non-windows platforms. For practical purposes I will only discuss how using &lt;code&gt;--vf&lt;/code&gt; will improve encoding time:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;--vf crop:{left},{top},{right},{bottom}/resize:{width},{height},0:0,method=spline
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&amp;hellip;will allow you to crop and/or resize your source video without the need for using an AviSynth script. Do not use this parameter in your test encodes, only for the full encode. For the full movie encode, you will copy any cropping and resizing numbers from the &lt;code&gt;.avs&lt;/code&gt; test script to this parameter. Crop should always be before resize. Anything outside of brackets should be left the same. The / is for separating the crop and resize filters. If you do not need to resize the source video, omit the / and everything after it.&lt;/p&gt;
+
+&lt;h2 id=&#34;minor-settings&#34;&gt;Minor Settings&lt;/h2&gt;
+
+&lt;p&gt;The following settings, for now, probably don&amp;rsquo;t merit an in-depth explanation as they should remain the same for everything you encode:&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;--b-pyramid normal&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;--no-dct-decimate&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;--analyse all&lt;/code&gt; / &lt;code&gt;--partitions all&lt;/code&gt; &amp;mdash; These two parameters are interchangeable. Many sites/guides still refer to this parameter when mentioning L4.1 (standalone device) compatibility. And while it is technically part of the L4.1 standard, no standalone device actually adheres to this portion of it. In other words, you can safely use &lt;code&gt;--analyse all&lt;/code&gt; / &lt;code&gt;--partitions all&lt;/code&gt; on every encode and still not break standalone device playback in any way.&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;--direct auto&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;--b-adapt 2&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;--trellis 2&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;--no-fast-pskip&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;--subme 11&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;--no-weightb&lt;/code&gt; &amp;mdash; May help quality retention on CGI material. Otherwise, don&amp;rsquo;t use this parameter.&lt;/p&gt;
+
+&lt;h2 id=&#34;final-notes&#34;&gt;Final Notes&lt;/h2&gt;
+
+&lt;p&gt;Please consider this to be a (very) rough draft. If I made a mistake or left something out, let me know.
+There are many parameters that you may have seen used in other encodes. More than likely these were attempts to limit overall bitrate and contribute nothing of value to the overall encode other than to keep the bottom-feeders from complaining about the file size.&lt;/p&gt;
+
+&lt;p&gt;Some of the parameters&amp;rsquo; suggested testing ranges are rather large. In most of these I have specified where you can cut down on test encodes if you know enough about the type of source you have. In others I have intentionally left them &amp;lsquo;open&amp;rsquo; for the time being. Myself and several others are working on a thought-to-be-dead project to automate x264 test encoding, and much of what we will be doing in the near future will be geared towards slimming down the testing range and in effect eliminating a large number of test encodes required to reach visual transparency. In other words, this is a DRAFT so don&amp;rsquo;t bitch about the test ranges just yet.&lt;/p&gt;
+
+&lt;h1 id=&#34;further-enhancements&#34;&gt;Further enhancements&lt;/h1&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Explain succinctly H.264 levels, and the whole CABAC or not CABAC deal&lt;/li&gt;
+&lt;li&gt;Expand on how you can make an encode most compatible (what you mention about breaking device compatability)&lt;/li&gt;
+&lt;li&gt;How the above relates to section 3.1 on the scene rules for x264 &lt;a href=&#34;http://scenerules.irc.gs/t.html?id=2011_X264.2.nfo&#34;&gt;http://scenerules.irc.gs/t.html?id=2011_X264.2.nfo&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Use a couple of your encode strings as an example and explain why you chose them.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Source: &lt;a href=&#34;https://www.reddit.com/r/trackers/comments/wevh2/good_beginning_x264_reference_guide/?st=iykv0fdu&amp;amp;sh=6a965450&#34;&gt;https://www.reddit.com/r/trackers/comments/wevh2/good_beginning_x264_reference_guide/?st=iykv0fdu&amp;amp;sh=6a965450&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Audio Codecs</title>
+      <link>https://av.community/codecs/audio/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://av.community/codecs/audio/</guid>
+      <description>&lt;p&gt;All about audio codecs&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Authoring a Professional Blu-ray Disc with x264</title>
+      <link>https://av.community/guides/authoring-a-professional-bluray-disc-with-x264/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://av.community/guides/authoring-a-professional-bluray-disc-with-x264/</guid>
+      <description>
+
+&lt;p&gt;Source: &lt;a href=&#34;http://www.x264bluray.com/home/&#34;&gt;http://www.x264bluray.com/home/&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;getting-started-with-x264&#34;&gt;Getting Started with x264&lt;/h2&gt;
+
+&lt;p&gt;x264 is a free AVC encoder that is best-in-class and thanks to compliance testing from the Criterion Collection now supports Blu-ray Disc encoding. GDMX has also vetted x264 for BD use using the Eclipse Verifier in 1080p24 and 1080p/i30.&lt;/p&gt;
+
+&lt;p&gt;This page deals with the most common scenarios for Blu-ray authoring. Many commercial discs from well known names have been made using the guides here. You should also know your desired bitrate beforehand.&lt;/p&gt;
+
+&lt;p&gt;x264 can be downloaded here: &lt;a href=&#34;http://download.videolan.org/pub/videolan/x264/binaries/&#34;&gt;http://download.videolan.org/pub/videolan/x264/binaries/&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;The easiest way to customise x264&amp;rsquo;s encoding time is to use the following presets:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;superfast&lt;/li&gt;
+&lt;li&gt;veryfast&lt;/li&gt;
+&lt;li&gt;faster&lt;/li&gt;
+&lt;li&gt;fast&lt;/li&gt;
+&lt;li&gt;medium&lt;/li&gt;
+&lt;li&gt;slow&lt;/li&gt;
+&lt;li&gt;slower&lt;/li&gt;
+&lt;li&gt;veryslow&lt;/li&gt;
+&lt;li&gt;placebo&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;It is also possible to tune for various content types:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;film&lt;/li&gt;
+&lt;li&gt;animation&lt;/li&gt;
+&lt;li&gt;grain&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Output .264 files can then be imported successfully into mastering applications such as Sonic Scenarist and Sony Blu-Print.  The Blu-ray spec allows a variety of different configurations but all the settings on this site are chosen to maximise quality.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;NB:&lt;/strong&gt; These settings are all 2-pass encodes. If you wish to run a single-pass encode make sure that &amp;ldquo;&amp;ndash;pass 1&amp;rdquo; is NOT included
+in your command line.&lt;/p&gt;
+
+&lt;p&gt;It is &lt;strong&gt;strongly recommended&lt;/strong&gt; to inverse telecine any telecined material.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;NB:&lt;/strong&gt; If your source file is not natively the correct framerate you will have to add the following settings (example for 23.976):&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;--fps 24000/1001 --force-cfr
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;You can also post feedback or ask questions regarding x264 Blu-ray authoring using the following form:  Feedback and Comments&lt;/p&gt;
+
+&lt;p&gt;Questions regarding x264 for authoring commercial releases will be kept confidential if requested. This has been done on many occasions.&lt;/p&gt;
+
+&lt;p&gt;More detailed information about x264&amp;rsquo;s settings can be found here: x264 settings&lt;/p&gt;
+
+&lt;p&gt;More information about x264 can be found here: x264 homepage&lt;/p&gt;
+
+&lt;h3 id=&#34;1080i&#34;&gt;1080i&lt;/h3&gt;
+
+&lt;p&gt;Primary and Secondary Streams (assumes top field first)&lt;/p&gt;
+
+&lt;h4 id=&#34;1080i25&#34;&gt;1080i25&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code&gt;x264 --bitrate XXXXX --preset veryslow --tune film --bluray-compat --vbv-maxrate 40000 --vbv-bufsize 30000 --level 4.1 --keyint 25 --open-gop --slices 4 --tff --colorprim &amp;quot;bt709&amp;quot; --transfer &amp;quot;bt709&amp;quot; --colormatrix &amp;quot;bt709&amp;quot; --sar 1:1 --pass 1 -o out.264 input.file
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;x264 --bitrate XXXXX --preset veryslow --tune film --bluray-compat --vbv-maxrate 40000 --vbv-bufsize 30000 --level 4.1 --keyint 25 --open-gop --slices 4 --tff --colorprim &amp;quot;bt709&amp;quot; --transfer &amp;quot;bt709&amp;quot; --colormatrix &amp;quot;bt709&amp;quot; --sar 1:1 --pass 2 -o out.264 input.file
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;1080i29-97-1080i30&#34;&gt;1080i29.97 / 1080i30&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code&gt;x264 --bitrate XXXXX --preset veryslow --tune film --bluray-compat --vbv-maxrate 40000 --vbv-bufsize 30000 --level 4.1 --keyint 30 --open-gop --slices 4 --tff --colorprim &amp;quot;bt709&amp;quot; --transfer &amp;quot;bt709&amp;quot; --colormatrix &amp;quot;bt709&amp;quot; --sar 1:1 --pass 1 -o out.264 input.file
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;x264 --bitrate XXXXX --preset veryslow --tune film --bluray-compat --vbv-maxrate 40000 --vbv-bufsize 30000 --level 4.1 --keyint 30 --open-gop --slices 4 --tff --colorprim &amp;quot;bt709&amp;quot; --transfer &amp;quot;bt709&amp;quot; --colormatrix &amp;quot;bt709&amp;quot; --sar 1:1 --pass 2 -o out.264 input.file
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;1080p&#34;&gt;1080p&lt;/h3&gt;
+
+&lt;p&gt;Primary and Secondary Streams&lt;/p&gt;
+
+&lt;h4 id=&#34;1080p23-976-1080p24&#34;&gt;1080p23.976 / 1080p24&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code&gt;x264 --bitrate XXXXX --preset veryslow --tune film --bluray-compat --vbv-maxrate 40000 --vbv-bufsize 30000 --level 4.1 --keyint 24 --open-gop --slices 4 --colorprim &amp;quot;bt709&amp;quot; --transfer &amp;quot;bt709&amp;quot; --colormatrix &amp;quot;bt709&amp;quot; --sar 1:1 --pass 1 -o out.264 input.file
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;x264 --bitrate XXXXX --preset veryslow --tune film --bluray-compat --vbv-maxrate 40000 --vbv-bufsize 30000 --level 4.1 --keyint 24 --open-gop --slices 4 --colorprim &amp;quot;bt709&amp;quot; --transfer &amp;quot;bt709&amp;quot; --colormatrix &amp;quot;bt709&amp;quot; --sar 1:1 --pass 2 -o out.264 input.file
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;NB: the following two streams are encoded using fake-interlaced mode. This allows the stream to be encoded progressively yet flagged as interlaced.&lt;/p&gt;
+
+&lt;h4 id=&#34;1080p25&#34;&gt;1080p25&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code&gt;x264 --bitrate XXXXX --preset veryslow --tune film --bluray-compat --vbv-maxrate 40000 --vbv-bufsize 30000 --level 4.1 --keyint 25 --open-gop --slices 4 --fake-interlaced --colorprim &amp;quot;bt709&amp;quot; --transfer &amp;quot;bt709&amp;quot; --colormatrix &amp;quot;bt709&amp;quot; --sar 1:1 --pass 1 -o out.264 input.file
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;x264 --bitrate XXXXX --preset veryslow --tune film --bluray-compat --vbv-maxrate 40000 --vbv-bufsize 30000 --level 4.1 --keyint 25 --open-gop --slices 4 --fake-interlaced --colorprim &amp;quot;bt709&amp;quot; --transfer &amp;quot;bt709&amp;quot; --colormatrix &amp;quot;bt709&amp;quot; --sar 1:1 --pass 2 -o out.264 input.file
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;1080p29-97&#34;&gt;1080p29.97&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code&gt;x264 --bitrate XXXXX --preset veryslow --tune film --bluray-compat --vbv-maxrate 40000 --vbv-bufsize 30000 --level 4.1 --keyint 30 --open-gop --slices 4 --fake-interlaced --colorprim &amp;quot;bt709&amp;quot; --transfer &amp;quot;bt709&amp;quot; --colormatrix &amp;quot;bt709&amp;quot; --sar 1:1 --pass 1 -o out.264 input.file
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;x264 --bitrate XXXXX --preset veryslow --tune film --bluray-compat --vbv-maxrate 40000 --vbv-bufsize 30000 --level 4.1 --keyint 30 --open-gop --slices 4 --fake-interlaced --colorprim &amp;quot;bt709&amp;quot; --transfer &amp;quot;bt709&amp;quot; --colormatrix &amp;quot;bt709&amp;quot; --sar 1:1 --pass 2 -o out.264 input.file
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;480i-ntsc&#34;&gt;480i (NTSC)&lt;/h3&gt;
+
+&lt;p&gt;Primary Stream (assumes bottom field first)&lt;/p&gt;
+
+&lt;p&gt;Replace &amp;ndash;sar 40:33 with &amp;ndash;sar 10:11 if you require a 4:3 Display Aspect Ratio&lt;/p&gt;
+
+&lt;h4 id=&#34;480i29-97&#34;&gt;480i29.97&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code&gt;x264 --bitrate XXXXX --preset veryslow --tune film --bluray-compat --vbv-maxrate 40000 --vbv-bufsize 30000 --level 4.1 --keyint 30 --open-gop --slices 4 --bff --colorprim &amp;quot;smpte170m&amp;quot; --transfer &amp;quot;smpte170m&amp;quot; --colormatrix &amp;quot;smpte170m&amp;quot; --sar 40:33 --pass 1 -o out.264 input.file
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;x264 --bitrate XXXXX --preset veryslow --tune film --bluray-compat --vbv-maxrate 40000 --vbv-bufsize 30000 --level 4.1 --keyint 30 --open-gop --slices 4 --bff --colorprim &amp;quot;smpte170m&amp;quot; --transfer &amp;quot;smpte170m&amp;quot; --colormatrix &amp;quot;smpte170m&amp;quot; --sar 40:33 --pass 2 -o out.264 input.file
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Secondary Stream&lt;/p&gt;
+
+&lt;h4 id=&#34;480i29-97-1&#34;&gt;480i29.97&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code&gt;x264 --bitrate XXXXX --preset veryslow --tune film --bluray-compat --vbv-maxrate 8000 --vbv-bufsize 8000 --level 3.2 --keyint 30 --open-gop --bff --colorprim &amp;quot;smpte170m&amp;quot; --transfer &amp;quot;smpte170m&amp;quot; --colormatrix &amp;quot;smpte170m&amp;quot; --sar 40:33 --pass 1 -o out.264 input.file
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;x264 --bitrate XXXXX --preset veryslow --tune film --bluray-compat --vbv-maxrate 8000 --vbv-bufsize 8000 --level 3.2 --keyint 30 --open-gop --bff --colorprim &amp;quot;smpte170m&amp;quot; --transfer &amp;quot;smpte170m&amp;quot; --colormatrix &amp;quot;smpte170m&amp;quot; --sar 40:33 --pass 2 -o out.264 input.file
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;480p-ntsc&#34;&gt;480p (NTSC)&lt;/h3&gt;
+
+&lt;p&gt;Primary Stream&lt;/p&gt;
+
+&lt;p&gt;Replace &amp;ndash;sar 40:33 with &amp;ndash;sar 10:11 if you require a 4:3 Display Aspect Ratio
+480p23.976 (soft 3:2 pulldown applied and fake interlaced)&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;x264 --bitrate XXXXX --preset veryslow --tune film --bluray-compat --vbv-maxrate 40000 --vbv-bufsize 30000 --level 4.1 --keyint 24 --open-gop --slices 4 --pulldown 32 --fake-interlaced --colorprim &amp;quot;smpte170m&amp;quot; --transfer &amp;quot;smpte170m&amp;quot; --colormatrix &amp;quot;smpte170m&amp;quot; --sar 40:33 --pass 1 -o out.264 input.file
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;x264 --bitrate XXXXX --preset veryslow --tune film --bluray-compat --vbv-maxrate 40000 --vbv-bufsize 30000 --level 4.1 --keyint 24 --open-gop --slices 4 --pulldown 32 --fake-interlaced --colorprim &amp;quot;smpte170m&amp;quot; --transfer &amp;quot;smpte170m&amp;quot; --colormatrix &amp;quot;smpte170m&amp;quot; --sar 40:33 --pass 2 -o out.264 input.file
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;NB: Secondary Streams are less restrictive than primary streams in 480p mode&lt;/p&gt;
+
+&lt;p&gt;Secondary Stream&lt;/p&gt;
+
+&lt;h4 id=&#34;480p23-976-480p24&#34;&gt;480p23.976/480p24&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code&gt;x264 --bitrate XXXXX --preset veryslow --tune film --bluray-compat --vbv-maxrate 8000 --vbv-bufsize 8000 --level 3.2 --keyint 24 --open-gop --colorprim &amp;quot;smpte170m&amp;quot; --transfer &amp;quot;smpte170m&amp;quot; --colormatrix &amp;quot;smpte170m&amp;quot; --sar 40:33 --pass 1 -o out.264 input.file
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;x264 --bitrate XXXXX --preset veryslow --tune film --bluray-compat --vbv-maxrate 8000 --vbv-bufsize 8000 --level 3.2 --keyint 24 --open-gop --colorprim &amp;quot;smpte170m&amp;quot; --transfer &amp;quot;smpte170m&amp;quot; --colormatrix &amp;quot;smpte170m&amp;quot; --sar 40:33 --pass 2 -o out.264 input.file
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;480p29-970&#34;&gt;480p29.970&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code&gt;x264 --bitrate XXXXX --preset veryslow --tune film --bluray-compat --vbv-maxrate 8000 --vbv-bufsize 8000 --level 3.2 --keyint 30 --open-gop --colorprim &amp;quot;smpte170m&amp;quot; --transfer &amp;quot;smpte170m&amp;quot; --colormatrix &amp;quot;smpte170m&amp;quot; --sar 40:33 --pass 1 -o out.264 input.file
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;x264 --bitrate XXXXX --preset veryslow --tune film --bluray-compat --vbv-maxrate 8000 --vbv-bufsize 8000 --level 3.2 --keyint 30 --open-gop --colorprim &amp;quot;smpte170m&amp;quot; --transfer &amp;quot;smpte170m&amp;quot; --colormatrix &amp;quot;smpte170m&amp;quot; --sar 40:33 --pass 2 -o out.264 input.file
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;576i-pal&#34;&gt;576i (PAL)&lt;/h3&gt;
+
+&lt;p&gt;Primary Stream (assumes top field first)&lt;/p&gt;
+
+&lt;p&gt;Replace &amp;ndash;sar 16:11 with &amp;ndash;sar 12:11 if you require a 4:3 Display Aspect Ratio&lt;/p&gt;
+
+&lt;h4 id=&#34;576i25&#34;&gt;576i25&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code&gt;x264 --bitrate XXXXX --preset veryslow --tune film --bluray-compat --vbv-maxrate 40000 --vbv-bufsize 30000 --level 4.1 --keyint 25 --open-gop --slices 4 --tff --colorprim &amp;quot;bt470bg&amp;quot; --transfer &amp;quot;bt470bg&amp;quot; --colormatrix &amp;quot;bt470bg&amp;quot; --sar 16:11 --pass 1 -o out.264 input.file
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;x264 --bitrate XXXXX --preset veryslow --tune film --bluray-compat --vbv-maxrate 40000 --vbv-bufsize 30000 --level 4.1 --keyint 25 --open-gop --slices 4 --tff --colorprim &amp;quot;bt470bg&amp;quot; --transfer &amp;quot;bt470bg&amp;quot; --colormatrix &amp;quot;bt470bg&amp;quot; --sar 16:11 --pass 2 -o out.264 input.file
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Secondary Stream&lt;/p&gt;
+
+&lt;h4 id=&#34;576i25-1&#34;&gt;576i25&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code&gt;x264 --bitrate XXXXX --preset veryslow --tune film --bluray-compat --vbv-maxrate 8000 --vbv-bufsize 8000 --level 3.2 --keyint 25 --open-gop --ref 5 --tff --colorprim &amp;quot;bt470bg&amp;quot; --transfer &amp;quot;bt470bg&amp;quot; --colormatrix &amp;quot;bt470bg&amp;quot; --sar 16:11 --pass 1 -o out.264 input.file
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;x264 --bitrate XXXXX --preset veryslow --tune film --bluray-compat --vbv-maxrate 8000 --vbv-bufsize 8000 --level 3.2 --keyint 25 --open-gop --ref 5 --tff --colorprim &amp;quot;bt470bg&amp;quot; --transfer &amp;quot;bt470bg&amp;quot; --colormatrix &amp;quot;bt470bg&amp;quot; --sar 16:11 --pass 2 -o out.264 input.file
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Primary Stream&lt;/p&gt;
+
+&lt;p&gt;NB: The following stream requires fake interlaced mode which allows encoding progressively but flags the content as interlaced.
+Replace &amp;ndash;sar 16:11 with &amp;ndash;sar 12:11 if you require a 4:3 Display Aspect Ratio&lt;/p&gt;
+
+&lt;h4 id=&#34;576p25&#34;&gt;576p25&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code&gt;x264 --bitrate XXXXX --preset veryslow --tune film --bluray-compat --vbv-maxrate 40000 --vbv-bufsize 30000 --level 4.1 --keyint 25 --open-gop --slices 4 --fake-interlaced --pic-struct --colorprim &amp;quot;bt470bg&amp;quot; --transfer &amp;quot;bt470bg&amp;quot; --colormatrix &amp;quot;bt470bg&amp;quot; --sar 16:11 --pass 1 -o out.264 input.file
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;x264 --bitrate XXXXX --preset veryslow --tune film --bluray-compat --vbv-maxrate 40000 --vbv-bufsize 30000 --level 4.1 --keyint 25 --open-gop --slices 4 --fake-interlaced --pic-struct --colorprim &amp;quot;bt470bg&amp;quot; --transfer &amp;quot;bt470bg&amp;quot; --colormatrix &amp;quot;bt470bg&amp;quot; --sar 16:11 --pass 2 -o out.264 input.file
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Secondary Stream&lt;/p&gt;
+
+&lt;h4 id=&#34;576p25-1&#34;&gt;576p25&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code&gt;x264 --bitrate XXXXX --preset veryslow --tune film --bluray-compat --vbv-maxrate 8000 --vbv-bufsize 8000 --level 3.2 --keyint 25 --open-gop --ref 5 --colorprim &amp;quot;bt470bg&amp;quot; --transfer &amp;quot;bt470bg&amp;quot; --colormatrix &amp;quot;bt470bg&amp;quot; --sar 16:11 --pass 1 -o out.264 input.file
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;x264 --bitrate XXXXX --preset veryslow --tune film --bluray-compat --vbv-maxrate 8000 --vbv-bufsize 8000 --level 3.2 --keyint 25 --open-gop --ref 5 --colorprim &amp;quot;bt470bg&amp;quot; --transfer &amp;quot;bt470bg&amp;quot; --colormatrix &amp;quot;bt470bg&amp;quot; --sar 16:11 --pass 2 -o out.264 input.file
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;720p&#34;&gt;720p&lt;/h3&gt;
+
+&lt;p&gt;Primary and Secondary Streams&lt;/p&gt;
+
+&lt;h4 id=&#34;720p23-976-720p24&#34;&gt;720p23.976 / 720p24&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code&gt;x264 --bitrate XXXXX --preset veryslow --tune film --bluray-compat --vbv-maxrate 40000 --vbv-bufsize 30000 --level 4.1 --keyint 24 --open-gop --slices 4 --colorprim &amp;quot;bt709&amp;quot; --transfer &amp;quot;bt709&amp;quot; --colormatrix &amp;quot;bt709&amp;quot; --sar 1:1 --pass 1 -o out.264 input.file
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;x264 --bitrate XXXXX --preset veryslow --tune film --bluray-compat --vbv-maxrate 40000 --vbv-bufsize 30000 --level 4.1 --keyint 24 --open-gop --slices 4 --colorprim &amp;quot;bt709&amp;quot; --transfer &amp;quot;bt709&amp;quot; --colormatrix &amp;quot;bt709&amp;quot; --sar 1:1 --pass 2 -o out.264 input.file
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;NB: the next two streams use frame doubling to comply with the Blu-Ray specification:&lt;/p&gt;
+
+&lt;h4 id=&#34;720p25&#34;&gt;720p25&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code&gt;x264 --bitrate XXXXX --preset veryslow --tune film --bluray-compat --vbv-maxrate 40000 --vbv-bufsize 30000 --level 4.1 --keyint 25 --open-gop --slices 4 --pulldown double --colorprim &amp;quot;bt709&amp;quot; --transfer &amp;quot;bt709&amp;quot; --colormatrix &amp;quot;bt709&amp;quot; --sar 1:1 --pass 1 -o out.264 input.file
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;x264 --bitrate XXXXX --preset veryslow --tune film --bluray-compat --vbv-maxrate 40000 --vbv-bufsize 30000 --level 4.1 --keyint 25 --open-gop --slices 4 --pulldown double --colorprim &amp;quot;bt709&amp;quot; --transfer &amp;quot;bt709&amp;quot; --colormatrix &amp;quot;bt709&amp;quot; --sar 1:1 --pass 2 -o out.264 input.file
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;720p29-97&#34;&gt;720p29.97&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code&gt;x264 --bitrate XXXXX --preset veryslow --tune film --bluray-compat --vbv-maxrate 40000 --vbv-bufsize 30000 --level 4.1 --keyint 30 --open-gop --slices 4 --pulldown double --colorprim &amp;quot;bt709&amp;quot; --transfer &amp;quot;bt709&amp;quot; --colormatrix &amp;quot;bt709&amp;quot; --sar 1:1 --pass 1 -o out.264 input.file
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;x264 --bitrate XXXXX --preset veryslow --tune film --bluray-compat --vbv-maxrate 40000 --vbv-bufsize 30000 --level 4.1 --keyint 30 --open-gop --slices 4 --pulldown double --colorprim &amp;quot;bt709&amp;quot; --transfer &amp;quot;bt709&amp;quot; --colormatrix &amp;quot;bt709&amp;quot; --sar 1:1 --pass 2 -o out.264 input.file
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;720p50&#34;&gt;720p50&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code&gt;x264 --bitrate XXXXX --preset veryslow --tune film --bluray-compat --vbv-maxrate 40000 --vbv-bufsize 30000 --level 4.1 --keyint 50 --open-gop --slices 4 --colorprim &amp;quot;bt709&amp;quot; --transfer &amp;quot;bt709&amp;quot; --colormatrix &amp;quot;bt709&amp;quot; --sar 1:1 --pass 1 -o out.264 input.file
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;x264 --bitrate XXXXX --preset veryslow --tune film --bluray-compat --vbv-maxrate 40000 --vbv-bufsize 30000 --level 4.1 --keyint 50 --open-gop --slices 4 --colorprim &amp;quot;bt709&amp;quot; --transfer &amp;quot;bt709&amp;quot; --colormatrix &amp;quot;bt709&amp;quot; --sar 1:1 --pass 2 -o out.264 input.file
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;720p59-94&#34;&gt;720p59.94&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code&gt;x264 --bitrate XXXXX --preset veryslow --tune film --bluray-compat --vbv-maxrate 40000 --vbv-bufsize 30000 --level 4.1 --keyint 60 --open-gop --slices 4 --colorprim &amp;quot;bt709&amp;quot; --transfer &amp;quot;bt709&amp;quot; --colormatrix &amp;quot;bt709&amp;quot; --sar 1:1 --pass 1 -o out.264 input.file
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;x264 --bitrate XXXXX --preset veryslow --tune film --bluray-compat --vbv-maxrate 40000 --vbv-bufsize 30000 --level 4.1 --keyint 60 --open-gop --slices 4 --colorprim &amp;quot;bt709&amp;quot; --transfer &amp;quot;bt709&amp;quot; --colormatrix &amp;quot;bt709&amp;quot; --sar 1:1 --pass 2 -o out.264 input.file
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;issues-with-certain-players-authoring-applications&#34;&gt;Issues with certain players/authoring applications&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Sony DVD-A does not support interlaced files encoded with x264.&lt;/li&gt;
+&lt;li&gt;TSmuxer does not support any of the &amp;ndash;pulldown options.&lt;/li&gt;
+&lt;li&gt;Adobe Encore CS5 has poor performance when &amp;ndash;open-gop is enabled&lt;/li&gt;
+&lt;li&gt;Sony Blu-Print has stuttering with B-frames. Sony appear to have fixed this issue.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;There are no reports of playback problems with any other authoring applications.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;issues-with-certain-verifiers&#34;&gt;Issues with certain verifiers&lt;/h2&gt;
+
+&lt;p&gt;Panasonic Blu-Ray verifier reports the following error: &lt;code&gt;&amp;quot;uuid_iso_iec_11578: This field shall be set to &amp;quot;17ee8c60-f84d-11d9-8cd6-0800200c9a66&amp;quot;&lt;/code&gt;.  This is a false positive - the SEI x264 uses is allowed under the Blu-ray Specification.&lt;/p&gt;
+
+&lt;p&gt;Sony BD-ROM verifier reports &lt;code&gt;&amp;quot;Note ES7183&amp;quot;&lt;/code&gt; with fake-interlaced 1080p25. This is a false positive.&lt;/p&gt;
+
+&lt;p&gt;There are no other known issues with any other verifiers.&lt;/p&gt;
+
+&lt;h2 id=&#34;licensing&#34;&gt;Licensing&lt;/h2&gt;
+
+&lt;p&gt;Contrary to many reports there are no licence fees necessary for using x264 to encode commercial Blu-Rays.&lt;/p&gt;
+
+&lt;p&gt;The standard Blu-Ray licensing procedures apply as with any encoder.&lt;/p&gt;
+
+&lt;h2 id=&#34;chapters&#34;&gt;Chapters&lt;/h2&gt;
+
+&lt;p&gt;You can force specific frametypes for chapters by using a qpfile. Create a text file with notepad.&lt;/p&gt;
+
+&lt;p&gt;The format of this file is simply (each with a space between the next):&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Frame Number | Frame Type | Quantizer&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;e.g.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;500 K -1
+600 K -1
+900 K -1
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Frame numbers should be in ascending order. K stands for keyframe. All Quantizers should be set to -1 (automatic).&lt;/p&gt;
+
+&lt;p&gt;Add the following&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;--qpfile QPFILE_NAME
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;x264-encoded-discs&#34;&gt;x264 encoded discs&lt;/h2&gt;
+
+&lt;p&gt;Many discs have been created with the instructions on this site:&lt;/p&gt;
+
+&lt;h3 id=&#34;whole-discs&#34;&gt;Whole discs&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&amp;ldquo;Friends&amp;rdquo; Boxset - Warner Home Video&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;Mike and Molly Season 1&amp;rdquo; - Warner Home Video&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;Machete&amp;rdquo; - Kino Świat&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;Phil Collins: Going Back - Live at the Roseland Ballroom NYC&amp;rdquo; (German release)&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;Trigun Badlands Rumble&amp;rdquo; - Dynit Srl&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;Mindcandy Volume 3&amp;rdquo; - Fusecon, Hornet&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;Keeper&amp;rsquo;n til Liverpool&amp;rdquo; (english: The Liverpool Goalie )&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;Kommandor Treholt og Ninjatroppen&amp;rdquo; (english: New Norwegian Hope )&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;Koselig med peis&amp;rdquo; (english: Norwegian Cozy )&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;There are many x264-encoded discs out there which we haven&amp;rsquo;t heard about. Tell us if you know of any.&lt;/p&gt;
+
+&lt;h3 id=&#34;menus&#34;&gt;Menus&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Discs authored by &lt;a href=&#34;http://www.anteprimavideo.com/&#34;&gt;http://www.anteprimavideo.com/&lt;/a&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&amp;ldquo;Il favoloso mondo di Amélie&amp;rdquo; (original title: Le fabuleux destin d&amp;rsquo;Amélie Poulain - english: The Fabulous Destiny of Amelie Poulain)&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;La Tigre e il Dragone&amp;rdquo; (original title: Wo hu cang long - english: Crouching Tiger, Hidden Dragon)&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;The Town&amp;rdquo; - Warner Home Video&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;Lord of the Rings Extended Edition&amp;rdquo; (various small segments) - Warner Home Video&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;Sofia Coppola&amp;rdquo; - Pathe Distribution&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;demo-disc&#34;&gt;Demo Disc&lt;/h3&gt;
+
+&lt;p&gt;We&amp;rsquo;ve created an example Blu-Ray disc that fits on a DVD: &lt;a href=&#34;http://x264dev.multimedia.cx/?p=328&#34;&gt;http://x264dev.multimedia.cx/?p=328&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Chroma Subsampling</title>
+      <link>https://av.community/guides/chroma-subsampling/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://av.community/guides/chroma-subsampling/</guid>
+      <description>
+
+&lt;p&gt;Source: &lt;a href=&#34;https://en.wikipedia.org/wiki/Chroma_subsampling&#34;&gt;https://en.wikipedia.org/wiki/Chroma_subsampling&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Chroma subsampling is the practice of encoding images by implementing less resolution for chroma information than for luma information, taking advantage of the human visual system&amp;rsquo;s lower acuity for color differences than for luminance.&lt;/p&gt;
+
+&lt;p&gt;It is used in many video encoding schemes — both analog and digital — and also in JPEG encoding.&lt;/p&gt;
+
+&lt;h2 id=&#34;rationale&#34;&gt;Rationale&lt;/h2&gt;
+
+&lt;p&gt;Digital signals are often compressed to save transmission time and reduce file size. Since the human visual system is much more sensitive to variations in brightness than color, a video system can be optimized by devoting more bandwidth to the luma component (usually denoted Y&amp;rsquo;), than to the color difference components Cb and Cr. In compressed images, for example, the 4:2:2 Y&amp;rsquo;CbCr scheme requires two-thirds the bandwidth of (4:4:4) R&amp;rsquo;G&amp;rsquo;B&amp;rsquo;. This reduction results in almost no visual difference as perceived by the viewer.&lt;/p&gt;
+
+&lt;h2 id=&#34;how-subsampling-works&#34;&gt;How subsampling works&lt;/h2&gt;
+
+&lt;p&gt;Because the human visual system is less sensitive to the position and motion of color than luminance,[2] bandwidth can be optimized by storing more luminance detail than color detail. At normal viewing distances, there is no perceptible loss incurred by sampling the color detail at a lower rate[vague]. In video systems, this is achieved through the use of color difference components. The signal is divided into a luma (Y&amp;rsquo;) component and two color difference components (chroma).&lt;/p&gt;
+
+&lt;p&gt;In human vision there are three channels for color detection, and for many color systems, three &amp;ldquo;channels&amp;rdquo; is sufficient for representing most colors. For example: red, green, blue or magenta, yellow, cyan. But there are other ways to represent the color. In many video systems, the three channels are luminance and two chroma channels. In video, the luma and chroma components are formed as a weighted sum of gamma-corrected (tristimulus) R&amp;rsquo;G&amp;rsquo;B&amp;rsquo; components instead of linear (tristimulus) RGB components. As a result, luma must be distinguished from luminance. That there is some &amp;ldquo;bleeding&amp;rdquo; of luminance and color information between the luma and chroma components in video, the error being greatest for highly saturated colors and noticeable in between the magenta and green bars of a color bars test pattern (that has chroma subsampling applied), should not be attributed to this engineering approximation being used. Indeed, similar bleeding can occur also with gamma = 1, whence the reversing of the order of operations between gamma correction and forming the weighted sum can make no difference. The chroma can influence the luma specifically at the pixels where the subsampling put no chroma. Interpolation may then put chroma values there which are incompatible with the luma value there, and further post-processing of that Y&amp;rsquo;CbCr into R&amp;rsquo;G&amp;rsquo;B&amp;rsquo; for that pixel is what ultimately produces false luminance upon display.&lt;/p&gt;
+
+&lt;h2 id=&#34;sampling-systems-and-ratios&#34;&gt;Sampling systems and ratios&lt;/h2&gt;
+
+&lt;p&gt;The subsampling scheme is commonly expressed as a three part ratio J:a:b (e.g. 4:2:2) or four parts if alpha channel is present (e.g. 4:2:2:4), that describe the number of luminance and chrominance samples in a conceptual region that is J pixels wide, and 2 pixels high. The parts are (in their respective order):&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;J: horizontal sampling reference (width of the conceptual region). Usually, 4.&lt;/li&gt;
+&lt;li&gt;a: number of chrominance samples (Cr, Cb) in the first row of J pixels.&lt;/li&gt;
+&lt;li&gt;b: number of changes of chrominance samples (Cr, Cb) between first and second row of J pixels.&lt;/li&gt;
+&lt;li&gt;Alpha: horizontal factor (relative to first digit). May be omitted if alpha component is not present, and is equal to J when present.
+This notation is not valid for all combinations and has exceptions, e.g. 4:1:0 (where the height of the region is not 2 pixels but 4 pixels, so if 8 bits/component are used the media would be 9 bits/pixel) and 4:2:1.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;An explanatory image of different chroma subsampling schemes can be seen at the following link: &lt;a href=&#34;http://lea.hamradio.si/~s51kq/subsample.gif&#34;&gt;http://lea.hamradio.si/~s51kq/subsample.gif&lt;/a&gt; (source: &amp;ldquo;Basics of Video&amp;rdquo;: &lt;a href=&#34;http://lea.hamradio.si/~s51kq/V-BAS.HTM&#34;&gt;http://lea.hamradio.si/~s51kq/V-BAS.HTM&lt;/a&gt;) or in details in Chrominance Subsampling in Digital Images, by Douglas Kerr.&lt;/p&gt;
+
+&lt;p&gt;The mapping examples given are only theoretical and for illustration. Also note that the diagram does not indicate any chroma filtering, which should be applied to avoid aliasing.&lt;/p&gt;
+
+&lt;p&gt;To calculate required bandwidth factor relative to 4:4:4 (or 4:4:4:4), one needs to sum all the factors and divide the result by 12 (or 16, if alpha is present).&lt;/p&gt;
+
+&lt;h2 id=&#34;types-of-sampling-and-subsampling&#34;&gt;Types of sampling and subsampling&lt;/h2&gt;
+
+&lt;h3 id=&#34;4-4-4&#34;&gt;4:4:4&lt;/h3&gt;
+
+&lt;p&gt;Each of the three Y&amp;rsquo;CbCr components have the same sample rate, thus there is no chroma subsampling. This scheme is sometimes used in high-end film scanners and cinematic post production.&lt;/p&gt;
+
+&lt;p&gt;Note that &amp;ldquo;4:4:4&amp;rdquo; may instead be referring to R&amp;rsquo;G&amp;rsquo;B&amp;rsquo; color space, which implicitly also does not have any chroma subsampling. Formats such as HDCAM SR can record 4:4:4 R&amp;rsquo;G&amp;rsquo;B&amp;rsquo; over dual-link HD-SDI .&lt;/p&gt;
+
+&lt;h3 id=&#34;4-2-2&#34;&gt;4:2:2&lt;/h3&gt;
+
+&lt;p&gt;The two chroma components are sampled at half the sample rate of luma: the horizontal chroma resolution is halved. This reduces the bandwidth of an uncompressed video signal by one-third with little to no visual difference.[citation needed]&lt;/p&gt;
+
+&lt;p&gt;Many high-end digital video formats and interfaces use this scheme:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;AVC-Intra 100&lt;/li&gt;
+&lt;li&gt;Digital Betacam&lt;/li&gt;
+&lt;li&gt;DVCPRO50 and DVCPRO HD&lt;/li&gt;
+&lt;li&gt;Digital-S&lt;/li&gt;
+&lt;li&gt;CCIR 601 / Serial Digital Interface / D1&lt;/li&gt;
+&lt;li&gt;ProRes (HQ, 422, LT, and Proxy)&lt;/li&gt;
+&lt;li&gt;XDCAM HD422&lt;/li&gt;
+&lt;li&gt;Canon MXF HD422&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;4-2-1&#34;&gt;4:2:1&lt;/h3&gt;
+
+&lt;p&gt;This sampling mode is not expressible in J:a:b notation. &amp;lsquo;4:2:1&amp;rsquo; is an obsolete term from a previous notational scheme, and very few software or hardware codecs use it. Cb horizontal resolution is half that of Cr (and a quarter of the horizontal resolution of Y). This exploits the fact that human eye has less spatial sensitivity to blue/yellow than to red/green. NTSC is similar, in using lower resolution for blue/yellow than red/green, which in turn has less resolution than luma.&lt;/p&gt;
+
+&lt;h3 id=&#34;4-1-1&#34;&gt;4:1:1&lt;/h3&gt;
+
+&lt;p&gt;In 4:1:1 chroma subsampling, the horizontal color resolution is quartered, and the bandwidth is halved compared to no chroma subsampling. Initially, 4:1:1 chroma subsampling of the DV format was not considered to be broadcast quality and was only acceptable for low-end and consumer applications.[3][4] Currently, DV-based formats (some of which use 4:1:1 chroma subsampling) are used professionally in electronic news gathering and in playout servers. DV has also been sporadically used in feature films and in digital cinematography.&lt;/p&gt;
+
+&lt;p&gt;In the NTSC system, if the luma is sampled at 13.5 MHz, then this means that the Cr and Cb signals will each be sampled at 3.375 MHz, which corresponds to a maximum Nyquist bandwidth of 1.6875 MHz, whereas traditional &amp;ldquo;high-end broadcast analog NTSC encoder&amp;rdquo; would have a Nyquist bandwidth of 1.5 MHz and 0.5 MHz for the I/Q channels. However, in most equipment, especially cheap TV sets and VHS/Betamax VCR&amp;rsquo;s the chroma channels have only the 0.5 MHz bandwidth for both Cr and Cb (or equivalently for I/Q). Thus the DV system actually provides a superior color bandwidth compared to the best composite analog specifications for NTSC, despite having only &lt;sup&gt;1&lt;/sup&gt;&amp;frasl;&lt;sub&gt;4&lt;/sub&gt; of the chroma bandwidth of a &amp;ldquo;full&amp;rdquo; digital signal.&lt;/p&gt;
+
+&lt;p&gt;Formats that use 4:1:1 chroma subsampling include:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;DVCPRO (NTSC and PAL)&lt;/li&gt;
+&lt;li&gt;NTSC DV and DVCAM&lt;/li&gt;
+&lt;li&gt;D-7&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;4-2-0&#34;&gt;4:2:0&lt;/h3&gt;
+
+&lt;p&gt;In 4:2:0, the horizontal sampling is doubled compared to 4:1:1, but as the Cb and Cr channels are only sampled on each alternate line in this scheme, the vertical resolution is halved. The data rate is thus the same. This fits reasonably well with the PAL color encoding system since this has only half the vertical chrominance resolution of NTSC. It would also fit extremely well with the SECAM color encoding system since like that format, 4:2:0 only stores and transmits one color channel per line (the other channel being recovered from the previous line). However, little equipment has actually been produced that outputs a SECAM analogue video signal. In general SECAM territories either have to use a PAL capable display or a transcoder to convert the PAL signal to SECAM for display.&lt;/p&gt;
+
+&lt;p&gt;Different variants of 4:2:0 chroma configurations are found in:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;All ISO/IEC MPEG and ITU-T VCEG H.26x video coding standards including H.262/MPEG-2 Part 2 implementations (although some profiles of MPEG-4 Part 2 and H.264/MPEG-4 AVC allow higher-quality sampling schemes such as 4:4:4)&lt;/li&gt;
+&lt;li&gt;DVD-Video and Blu-ray Disc.[5][6]&lt;/li&gt;
+&lt;li&gt;PAL DV and DVCAM&lt;/li&gt;
+&lt;li&gt;HDV&lt;/li&gt;
+&lt;li&gt;AVCHD and AVC-Intra 50&lt;/li&gt;
+&lt;li&gt;Apple Intermediate Codec&lt;/li&gt;
+&lt;li&gt;most common JPEG/JFIF and MJPEG implementations&lt;/li&gt;
+&lt;li&gt;VC-1&lt;/li&gt;
+&lt;li&gt;SuperMHL [7]&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Cb and Cr are each subsampled at a factor of 2 both horizontally and vertically.&lt;/p&gt;
+
+&lt;p&gt;There are three variants of 4:2:0 schemes, having different horizontal and vertical siting. [8]&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;In MPEG-2, Cb and Cr are cosited horizontally. Cb and Cr are sited between pixels in the vertical direction (sited interstitially).&lt;/li&gt;
+&lt;li&gt;In JPEG/JFIF, H.261, and MPEG-1, Cb and Cr are sited interstitially, halfway between alternate luma samples.&lt;/li&gt;
+&lt;li&gt;In 4:2:0 DV, Cb and Cr are co-sited in the horizontal direction. In the vertical direction, they are co-sited on alternating lines.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Most digital video formats corresponding to PAL use 4:2:0 chroma subsampling, with the exception of DVCPRO25, which uses 4:1:1 chroma subsampling. Both the 4:1:1 and 4:2:0 schemes halve the bandwidth compared to no chroma subsampling.&lt;/p&gt;
+
+&lt;p&gt;With interlaced material, 4:2:0 chroma subsampling can result in motion artifacts if it is implemented the same way as for progressive material. The luma samples are derived from separate time intervals while the chroma samples would be derived from both time intervals. It is this difference that can result in motion artifacts. The MPEG-2 standard allows for an alternate interlaced sampling scheme where 4:2:0 is applied to each field (not both fields at once). This solves the problem of motion artifacts, reduces the vertical chroma resolution by half, and can introduce comb-like artifacts in the image.&lt;/p&gt;
+
+&lt;h3 id=&#34;4-1-0&#34;&gt;4:1:0&lt;/h3&gt;
+
+&lt;p&gt;This ratio is possible, and some codecs support it, but it is not widely used. This ratio uses half of the vertical and one-fourth the horizontal color resolutions, with only one-eighth of the bandwidth of the maximum color resolutions used. Uncompressed video in this format with 8-bit quantization uses 10 bytes for every macropixel (which is 4 x 2 pixels). It has the equivalent chrominance bandwidth of a PAL I signal decoded with a delay line decoder, and still very much superior to NTSC.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Some video codecs may operate at 4:1:0.5 or 4:1:0.25 as an option, so as to allow similar to VHS quality.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;3-1-1&#34;&gt;3:1:1&lt;/h3&gt;
+
+&lt;p&gt;Used by Sony in their HDCAM High Definition recorders (not HDCAM SR). In the horizontal dimension, luma is sampled horizontally at three quarters of the full HD sampling rate- 1440 samples per row instead of 1920. Chroma is sampled at 480 samples per row, a third of the luma sampling rate.&lt;/p&gt;
+
+&lt;p&gt;In the vertical dimension, both luma and chroma are sampled at the full HD sampling rate (1080 samples vertically).&lt;/p&gt;
+
+&lt;h2 id=&#34;out-of-gamut-colors&#34;&gt;Out-of-gamut colors&lt;/h2&gt;
+
+&lt;p&gt;One of the artifacts that can occur with chroma subsampling is that out-of-gamut colors can occur upon chroma reconstruction. Suppose the image consisted of alternating 1-pixel red and black lines and the subsampling omitted the chroma for the black pixels. Chroma from the red pixels will be reconstructed onto the black pixels, causing the new pixels to have positive red and negative green and blue values. As displays cannot output negative light (negative light does not exist), these negative values will effectively be clipped and the resulting luma value will be too high.[10] Similar artifacts arise in the less artificial example of gradation near a fairly sharp red/black boundary.&lt;/p&gt;
+
+&lt;p&gt;Filtering during subsampling can also cause colors to go out of gamut.&lt;/p&gt;
+
+&lt;h2 id=&#34;terminology&#34;&gt;Terminology&lt;/h2&gt;
+
+&lt;p&gt;The term Y&amp;rsquo;UV refers to an analog encoding scheme while Y&amp;rsquo;CbCr refers to a digital encoding scheme.[citation needed] One difference between the two is that the scale factors on the chroma components (U, V, Cb, and Cr) are different. However, the term YUV is often used erroneously to refer to Y&amp;rsquo;CbCr encoding. Hence, expressions like &amp;ldquo;4:2:2 YUV&amp;rdquo; always refer to 4:2:2 Y&amp;rsquo;CbCr since there simply is no such thing as 4:x:x in analog encoding (such as YUV).&lt;/p&gt;
+
+&lt;p&gt;In a similar vein, the term luminance and the symbol Y are often used erroneously to refer to luma, which is denoted with the symbol Y&amp;rsquo;. Note that the luma (Y&amp;rsquo;) of video engineering deviates from the luminance (Y) of color science (as defined by CIE). Luma is formed as the weighted sum of gamma-corrected (tristimulus) RGB components. Luminance is formed as a weighed sum of linear (tristimulus) RGB components.&lt;/p&gt;
+
+&lt;p&gt;In practice, the CIE symbol Y is often incorrectly used to denote luma. In 1993, SMPTE adopted Engineering Guideline EG 28, clarifying the two terms. Note that the prime symbol &amp;lsquo; is used to indicate gamma correction.&lt;/p&gt;
+
+&lt;p&gt;Similarly, the chroma/chrominance of video engineering differs from the chrominance of color science. The chroma/chrominance of video engineering is formed from weighted tristimulus components, not linear components. In video engineering practice, the terms chroma, chrominance, and saturation are often used interchangeably to refer to chrominance.&lt;/p&gt;
+
+&lt;h2 id=&#34;history&#34;&gt;History&lt;/h2&gt;
+
+&lt;p&gt;Chroma subsampling was developed in the 1950s by Alda Bedford for the development of color television by RCA, which developed into the NTSC standard; luma-chroma separation was developed earlier, in 1938 by Georges Valensi.&lt;/p&gt;
+
+&lt;p&gt;Through studies, he showed that the human eye has high resolution only for black and white, somewhat less for &amp;ldquo;mid-range&amp;rdquo; colors like yellows and greens, and much less for colors on the end of the spectrum, reds and blues. Using this knowledge allowed RCA to develop a system in which they discarded most of the blue signal after it comes from the camera, keeping most of the green and only some of the red; this is chroma subsampling in the YIQ color space, and is roughly analogous to 4:2:1 subsampling, in that it has decreasing resolution for luma, yellow/green, and red/blue.&lt;/p&gt;
+
+&lt;h2 id=&#34;effectiveness&#34;&gt;Effectiveness&lt;/h2&gt;
+
+&lt;p&gt;While subsampling can easily reduce the size of an uncompressed image by 50% with minimal loss of quality, the final effect on the size of a compressed image is considerably less.[citation needed] This is because image compression algorithms also remove redundant chroma information. In fact, by applying something as rudimentary as chroma subsampling prior to compression, information is removed from the image that could be used by the compression algorithm to produce a higher quality result with no increase in size. For example, with wavelet compression methods, better results are obtained by dropping the highest frequency chroma layer inside the compression algorithm than by applying chroma subsampling prior to compression. This is because wavelet compression operates by repeatedly using wavelets as high and low pass filters to separate frequency bands in an image, and the wavelets do a better job than chroma subsampling does.[citation needed]&lt;/p&gt;
+
+&lt;h2 id=&#34;compatibility-issues&#34;&gt;Compatibility issues&lt;/h2&gt;
+
+&lt;p&gt;The details of chroma subsampling implementation cause considerable confusion. Is the upper leftmost chroma value stored, or the rightmost, or is it the average of all the chroma values? This must be exactly specified in standards and followed by all implementors. Incorrect implementations cause the chroma of an image to be offset from the luma. Repeated compression/decompression can cause the chroma to &amp;ldquo;travel&amp;rdquo; in one direction. Different standards may use different versions for example of &amp;ldquo;4:2:0&amp;rdquo; with respect to how the chroma value is determined, making one version of &amp;ldquo;4:2:0&amp;rdquo; incompatible with another version of &amp;ldquo;4:2:0&amp;rdquo;.&lt;/p&gt;
+
+&lt;p&gt;Proper upsampling of chroma can require knowing whether the source is progressive or interlaced, information which is often not available to the upsampler.&lt;/p&gt;
+
+&lt;p&gt;Chroma subsampling causes problems for film makers trying to do keying with blue or green screening. The chroma interpolation along edges produces noticeable haloing artifacts.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Codecs</title>
+      <link>https://av.community/codecs/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://av.community/codecs/</guid>
+      <description>&lt;p&gt;All about codecs&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Containers</title>
+      <link>https://av.community/containers/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://av.community/containers/</guid>
+      <description>&lt;p&gt;All about containers&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Getting Started</title>
+      <link>https://av.community/getting-started/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://av.community/getting-started/</guid>
+      <description>&lt;p&gt;This is the getting started page&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-javascript&#34; data-lang=&#34;javascript&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;kr&#34;&gt;import&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;test&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;from&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;test&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+
+&lt;span class=&#34;nx&#34;&gt;console&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;log&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;sb&#34;&gt;`hi &lt;/span&gt;&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;test&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;sb&#34;&gt;`&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>H.264 Advanced Guide</title>
+      <link>https://av.community/guides/h264-advanced-guide/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://av.community/guides/h264-advanced-guide/</guid>
+      <description>
+
+&lt;p&gt;Source: &lt;a href=&#34;https://app.zencoder.com/docs/guides/encoding-settings/h264-advanced&#34;&gt;https://app.zencoder.com/docs/guides/encoding-settings/h264-advanced&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;This page documents H.264-specific encoding with Zencoder. Zencoder encodes H.264 content using a variety of software, but our core encoder is the excellent x264, the best H.264 encoder available, and one of the best video encoding implementations for any codec. H.264 is the dominant video codec today for web and mobile video.&lt;/p&gt;
+
+&lt;h2 id=&#34;h-264-overview&#34;&gt;H.264 Overview&lt;/h2&gt;
+
+&lt;p&gt;The dominant video codec today for web and mobile video is H.264. Its compression quality ranks among the best of the modern codecs along with HEVC and VP9.&lt;/p&gt;
+
+&lt;p&gt;H.264 can be played in 99.9% of web browsers, on many mobile devices (including the iPhone/iPad, Android), as well as many connected television and streaming devices. It is also an excellent codec for desktop video.&lt;/p&gt;
+
+&lt;p&gt;H.264 is typically deployed in the MP4 file container. Valid extensions include .mp4, .m4v (mp4 video), .f4v (mp4 video for Flash) and .ts. Note that .flv is not a recommended file extension for H.264 Flash video — .f4v is preferred.&lt;/p&gt;
+
+&lt;p&gt;AAC and MP3 audio codecs are valid alongside H.264.&lt;/p&gt;
+
+&lt;h2 id=&#34;h-264-specific-notes-on-general-options&#34;&gt;H.264-specific notes on general options&lt;/h2&gt;
+
+&lt;p&gt;&lt;code&gt;crf&lt;/code&gt;: CRF is a bitrate-control setting, and sets a constant ratefactor. This is closely related to constant quantizer encoding, though CRF mode generally achieves better compression than constant Q encoding by reducing the quantizer quality on &amp;ldquo;less important&amp;rdquo; frames. Read more about crf.&lt;/p&gt;
+
+&lt;p&gt;The Zencoder Quality setting determines an appropriate CRF for a given video. So if you set both Quality and CRF, the CRF setting will override Quality.&lt;/p&gt;
+
+&lt;p&gt;Valid values are 0-51, with lower values being better quality. Generally speaking, you shouldn&amp;rsquo;t have to go below 16; 16 is nearly lossless for most files. Around 24 usually looks pretty good. Around 35 looks pretty compressed.&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;video_codec_profile&lt;/code&gt;: The supported H.264 profiles are: baseline, main, high, high10, high422, high444. Lower levels are easier to decode, but higher levels offer better compression and extended features. For example, some older phones only supports the Baseline profile, which we use by default. The Main and High profiles are a definite step up in compression, and work fine for web playback. Try High for the best quality, and Baseline for mobile device support. Default: &amp;ldquo;baseline&amp;rdquo;.&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;video_codec_level&lt;/code&gt;: constrains the bitrate and macroblocks. Primarily used for device compatibility. For example, the iPhone supports H.264 Level 3, which means that a video&amp;rsquo;s peak bitrate can&amp;rsquo;t exceed 10,000kbps. Only use this setting if you&amp;rsquo;re targeting a specific device that requires it. List of valid values. Default: 3.&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;tuning&lt;/code&gt;: &amp;ldquo;tune&amp;rdquo; the output video to a specific content type. Useful values are &amp;ldquo;animation&amp;rdquo; for animated content, &amp;ldquo;film&amp;rdquo; for live-action content (not just movies), and &amp;ldquo;grain&amp;rdquo; to improve encoding of grainy content. Valid values: film, animation, grain, psnr, ssim, fastdecode, or zerolatency. Default: none.&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;speed&lt;/code&gt;: Zencoder supports speed as a range from 1-5 for H.264. A lower speed results in slightly better compression, while a higher speed results in slightly worse compression.&lt;/p&gt;
+
+&lt;h3 id=&#34;crf&#34;&gt;crf&lt;/h3&gt;
+
+&lt;p&gt;CRF is a bitrate-control setting, and sets a constant ratefactor. This is closely related to constant quantizer encoding, though CRF mode generally achieves better compression than constant Q encoding by reducing the quantizer quality on &amp;ldquo;less important&amp;rdquo; frames. Read more about crf.&lt;/p&gt;
+
+&lt;p&gt;The Zencoder Quality setting determines an appropriate CRF for a given video. So if you set both Quality and CRF, the CRF setting will override Quality.&lt;/p&gt;
+
+&lt;p&gt;Valid values are 0-51, with lower values being better quality. Generally speaking, you shouldn&amp;rsquo;t have to go below 16; 16 is nearly lossless for most files. Around 24 usually looks pretty good. Around 35 looks pretty compressed.&lt;/p&gt;
+
+&lt;h3 id=&#34;video-codec-profile&#34;&gt;video_codec_profile&lt;/h3&gt;
+
+&lt;p&gt;Sets the encoding profile used by the video codec.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;H.264 profiles: baseline, main, high, high10, high422, high444.&lt;/li&gt;
+&lt;li&gt;HEVC profiles: main, main10, main12, main422-10, main422-12, main444-8, main444-10, main444-12.&lt;/li&gt;
+&lt;li&gt;VP9 profiles: 0, 1, 2, 3.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;In general, lower levels are supported by a wider range of devices and may be simpler to decode. Higher levels offer more features such as additional bit depths and chroma subsampling choices. In some cases, higher levels also support increased compression efficiency.&lt;/p&gt;
+
+&lt;h3 id=&#34;video-codec-level&#34;&gt;video_codec_level&lt;/h3&gt;
+
+&lt;p&gt;Constrains bitrate, macroblocks (H.264) or bitrate, coding tree units (HEVC).&lt;/p&gt;
+
+&lt;p&gt;Primarily used for device compatibility. For example, the iPhone supports H.264 Level 3, which means that a video’s decoder_bitrate_cap can’t exceed 10,000kbps. Typically, you should only change this setting if you’re targeting a specific device that requires it.&lt;/p&gt;
+
+&lt;h3 id=&#34;decoder-bitrate-cap&#34;&gt;decoder_bitrate_cap&lt;/h3&gt;
+
+&lt;p&gt;The max bitrate fed to the decoder via a buffer. This setting is typically used only for streaming (RTMP, HLS, or broadcast video).&lt;/p&gt;
+
+&lt;p&gt;Only use this setting if you understand its implications, as it can decrease video quality.&lt;/p&gt;
+
+&lt;h3 id=&#34;tuning&#34;&gt;tuning&lt;/h3&gt;
+
+&lt;p&gt;Tune the output video to optimize for a specific content type, or a specific encoding priority.&lt;/p&gt;
+
+&lt;p&gt;Behind the scenes, this sets the x264 &lt;code&gt;--tune&lt;/code&gt; option.&lt;/p&gt;
+
+&lt;p&gt;Possible values:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;film - optimized for most non-animated video content (not only feature films).&lt;/li&gt;
+&lt;li&gt;animation - optimized for animation. Note that most 3D animation behaves more like film and not like hand-drawn animation, so only use this for hand-drawn animation (anime, classic Disney, etc.).&lt;/li&gt;
+&lt;li&gt;grain - optimized for film with high levels of grain.&lt;/li&gt;
+&lt;li&gt;psnr - uses &amp;ldquo;peak signal-to-noise ratio&amp;rdquo; to optimize video quality.&lt;/li&gt;
+&lt;li&gt;ssim - uses &amp;ldquo;structural similarity&amp;rdquo; to optimize video quality.&lt;/li&gt;
+&lt;li&gt;fastdecode - reduces encoding complexity, to allow for easier decoding.&lt;/li&gt;
+&lt;li&gt;zerolatency - x264 will keep an internal buffer of frames to improve quality; this setting removes that buffer, but reduces quality.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;speed&#34;&gt;speed&lt;/h3&gt;
+
+&lt;p&gt;A target transcoding speed. Slower transcoding allows for more advanced file compression, while faster transcoding is possible by skipping some advanced compression features. Valid values are 1-5.&lt;/p&gt;
+
+&lt;p&gt;Note: at the moment, only H.264 output has five speed levels. For VP6 content, 1-2 are a slower mode, and 3-5 are a faster mode. Other video codecs do not support this setting at all.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>How Codecs Work</title>
+      <link>https://av.community/guides/how-codecs-work/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://av.community/guides/how-codecs-work/</guid>
+      <description>&lt;p&gt;Source: &lt;a href=&#34;https://vimeo.com/104554788&#34;&gt;https://vimeo.com/104554788&lt;/a&gt;&lt;/p&gt;
+
+&lt;iframe src=&#34;https://player.vimeo.com/video/104554788&#34; width=&#34;640&#34; height=&#34;360&#34; frameborder=&#34;0&#34; webkitallowfullscreen mozallowfullscreen allowfullscreen&gt;&lt;/iframe&gt;
+
+&lt;iframe src=&#34;https://player.vimeo.com/video/115534648&#34; width=&#34;640&#34; height=&#34;360&#34; frameborder=&#34;0&#34; webkitallowfullscreen mozallowfullscreen allowfullscreen&gt;&lt;/iframe&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Media Production</title>
+      <link>https://av.community/media-production/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://av.community/media-production/</guid>
+      <description>&lt;p&gt;Content here&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Media Storage</title>
+      <link>https://av.community/media-storage/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://av.community/media-storage/</guid>
+      <description>&lt;p&gt;Content here&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Physical Media</title>
+      <link>https://av.community/physical-media/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://av.community/physical-media/</guid>
+      <description>&lt;p&gt;All about physical media&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Remuxing</title>
+      <link>https://av.community/guides/remuxing/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://av.community/guides/remuxing/</guid>
+      <description>
+
+&lt;p&gt;Source: &lt;a href=&#34;https://sites.google.com/site/xorphdstuff/remuxing&#34;&gt;https://sites.google.com/site/xorphdstuff/remuxing&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;why-remux-blu-rays&#34;&gt;Why Remux Blu-rays?&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;You use MPC-HC (or similar DShow players) and standard filters for playback. You can also use better quality renderers like Haali, EVR and madVR.&lt;/li&gt;
+&lt;li&gt;You get the ease of playback of a re-encode without the quality loss. A double click off the .mkv will start the movie - no annoying warnings, loading screens, previews and setup menus.&lt;/li&gt;
+&lt;li&gt;You don&amp;rsquo;t have to deal with horribly bloated, unstable and expensive PowerDVD or Arcsoft playback software.&lt;/li&gt;
+&lt;li&gt;You don&amp;rsquo;t have to mess with ISO creation, correct BD folder structure, UDF and SPTD drivers, and image mounting every time you want to watch a movie.&lt;/li&gt;
+&lt;li&gt;You never have to worry about the region code setting of a disc.&lt;/li&gt;
+&lt;li&gt;You never have to worry about HDCP or PAP content protection.&lt;/li&gt;
+&lt;li&gt;You never have to worry about your software player downsampling your audio - get full bit-depth and frequency resolution, 24bit/96kHz or higher, not &lt;sup&gt;16&lt;/sup&gt;&amp;frasl;&lt;sub&gt;48&lt;/sub&gt;.&lt;/li&gt;
+&lt;li&gt;You don&amp;rsquo;t have to buy a HDMI sound card to get full resolution HD audio to your receiver.&lt;/li&gt;
+&lt;li&gt;You never have to worry about Dialog Normalization (DialNorm), as it is removed and you will get a better representation of the audio levels.&lt;/li&gt;
+&lt;li&gt;You can easily add subtitles and/or dubbed audio tracks not included on the original disc.&lt;/li&gt;
+&lt;li&gt;You can save lots of space per movie (see end of page for examples):
+
+&lt;ul&gt;
+&lt;li&gt;Blu-rays uses the M2TS container which has a large overhead. MKV has no such overhead, so you save space immediately due to that alone.
+-Dubbed audio tracks can add a lot to file size (10+ dubs on some Warner discs) and some discs even come with dubs in lossless/uncompressed.&lt;/li&gt;
+&lt;li&gt;FLAC tracks are about 10-20% smaller than TrueHD tracks and about 30-40% smaller than DTS-HD Master Audio tracks. If the audio is PCM, then the savings will be MUCH bigger (16-bit PCM can be compressed with a factor of over 3:1 to FLAC).&lt;/li&gt;
+&lt;li&gt;You can throw out all those useless bonus features, such as making-of featurettes, trailers for other movies (now often in HD) picture-in-picture streams, etc, all wasting tons of space.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;software-needed&#34;&gt;Software Needed&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;eac3to: &lt;a href=&#34;http://forum.doom9.org/showthread.php?t=125966&#34;&gt;http://forum.doom9.org/showthread.php?t=125966&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Haali Splitter: &lt;a href=&#34;http://haali.cs.msu.ru/mkv/&#34;&gt;http://haali.cs.msu.ru/mkv/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Sonic decoder OR Arcsoft decoder (for decoding DTS &amp;amp; DTS-HD)&lt;/li&gt;
+&lt;li&gt;mkvmerge: &lt;a href=&#34;http://www.bunkus.org/videotools/mkvtoolnix/downloads.html#windows&#34;&gt;http://www.bunkus.org/videotools/mkvtoolnix/downloads.html#windows&lt;/a&gt; (for combining video and audio into a single mkv)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Note that:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;A DTS encoder is only needed if you are going to turn lossless audio into a DTS track. If you have no intention to do that and want it 100% lossless, then skip it.&lt;/li&gt;
+&lt;li&gt;ALL DTS-HD Master and DTS-HD High Resolution audio tracks have a legacy DTS core track embedded into them. Most of the time they are the max 1509kbps bitrate.&lt;/li&gt;
+&lt;li&gt;The DTS Pro encoder or the Master Audio Suite (MAS) encoder create higher quality DTS audio encodes than the Surcode Encoder, but it cannot be automated to work inside eac3to.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;how-to-remux&#34;&gt;How to Remux&lt;/h2&gt;
+
+&lt;p&gt;Once you have all of that installed and eac3to unzipped somewhere, then go to command line and type eac3to.exe -test to see if everything is working. These are the results from my PC for example:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;eac3to -test
+Nero Audio Decoder (Nero 7 or older) doesn&#39;t seem to be installed
+http://www.nero.com/eng/store-blu-ray.html
+CAUTION: You need Nero 7. Nero 8 won&#39;t work with eac3to.
+ArcSoft DTS Decoder doesn&#39;t seem to be installed
+http://www.arcsoft.com/products/totalmediatheatre
+Sonic Audio Decoder (4.3.0.169) works fine
+Haali Matroska Muxer (2008-03-29) is up to date
+Nero AAC Encoder could not be located
+http://www.nero.com/eng/nero-aac-codec.html
+Copy NeroAacEnc.exe to the eac3to or to the Windows folder.
+Surcode DTS Encoder (1.0.29.0) is installed
+MkvToolnix (2.3.0.0, 2008-09-08) is up to date
+There&#39;s a new beta version (2.3.0.0, 2008-09-13) available
+http://www.bunkus.org/videotools/mkvtoolnix/win32/pre
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;step-1&#34;&gt;Step 1&lt;/h3&gt;
+
+&lt;p&gt;Now, with everything installed and working, we need a decrypted Blu-ray for this to work. Lets say my Blu-ray is in a directory called: &lt;code&gt;d:\godfather&lt;/code&gt;. I would type this in the eac3to directory (i used 00000.mt2s because that is the movie itself in a single file, weighing in at 44 gigs):&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;eac3to d:\godfather\bdmv\stream\00000.m2ts
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;It will scan the file, and then list the tracks like this:
+M2TS, 1 video track, 5 audio tracks, 8 subtitle tracks
+1: Chapters, 23 chapters
+2: h264/AVC, 1080p24 /1.001 (16:9)
+2: TrueHD/AC3, English, 5.1 channels, 48khz, dialnorm: -27dB
+   (embedded: AC3, 5.1 channels, 640kbps, 48khz, dialnorm: -27dB)
+4: AC3, English, 2.0 channels, 192kbps, 48khz, dialnorm: -27dB
+5: AC3, French, 5.1 channels, 640kbps, 48khz, dialnorm: -27dB
+6: AC3, Spanish, 5.1 channels, 640kbps, 48khz, dialnorm: -27dB
+7: AC3, English, 2.0 channels, 192kbps, 48khz, dialnorm: -27dB
+8: Subtitle (PGS), English
+9: Subtitle (PGS), Spanish
+10: Subtitle (PGS), French&lt;/p&gt;
+
+&lt;h3 id=&#34;step-2&#34;&gt;Step 2&lt;/h3&gt;
+
+&lt;p&gt;Your main concern is the tracks for video and the main audio, which are usually tracks 2 and 3. In this example, we see that the video is track 2 the in AVC format, and we see that the main audio is track 3 in the TrueHD format. Those are the main 2 tracks we need. A low bitrate 2 channel track is usually the commentary. In this case track 7 is the commentary. So now, we need the video in an mkv container, and the audio in a more usable form. The possible command lines used will be (the file names can be anything you want):&lt;/p&gt;
+
+&lt;p&gt;If you want the audio in 100% lossless FLAC with the same bit-depth (lets say the audio is 24-bit and you want to keep it 24-bit), you would use this:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;eac3to d:\godfather\bdmv\stream\00000.m2ts 2: d:\GodfatherVideo.mkv 3: d:\GodfatherAudio.flac
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;If you want to include the commentary you would use:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;eac3to d:\godfather\bdmv\stream\00000.m2ts 2: d:\GodfatherVideo.mkv 3: d:\GodfatherAudio.flac 7: d:\GodfatherCommentary.ac3
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;If the original track is 24-bit but you would like to reduce it to 16-bit to save even more space, you would use:*&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;eac3to d:\godfather\bdmv\stream\00000.m2ts 2: d:\GodfatherVideo.mkv 3: d:\GodfatherAudio.flac -down16
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;If you want the audio re-encoded to DTS from a PCM or TrueHD lossless track, you would use: (eac3to automatically encodes DTS at full 1509kbps bitrate)&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;eac3to d:\godfather\bdmv\stream\00000.m2ts 2: d:\GodFatherVideo.mkv 3: d:\GodfatherAudio.dts
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;If you want the AC3 core track extracted from TrueHD, you specify the track number of the TrueHD and save it with a .ac3 extension: **&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;eac3to d:\godfather\bdmv\stream\00000.m2ts 2: d:\GodFatherVideo.mkv 3: d:\GodfatherAudio.ac3
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;If you want the DTS core track from DTS-HD MA or DTS-HD HR, you add the -core switch after the destination file. If The Godfather had DTS-HD the command would be:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;eac3to d:\godfather\bdmv\stream\00000.m2ts 2: d:\GodFatherVideo.mkv 3: d:\GodfatherAudio.dts -core
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;To prepare a track to use with the DTS Pro Encoder, affix a .agm extension to the output file, then load the .agm file in the encoder:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;eac3to d:\godfather\bdmv\stream\00000.m2ts 2: d:\GodFatherVideo.mkv 3: d:\GodfatherAudio.agm
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;After it finishes doing its thing, you will end up with 2 (or more) files, a video file in the form of GodfatherVideo.mkv and an audio file in either GodfatherAudio.flac or GodfatherAudio.dts or GodfatherAudio. ac3, depending on which option you went with, plus any additional commentaries.&lt;/p&gt;
+
+&lt;h3 id=&#34;step-3&#34;&gt;Step 3&lt;/h3&gt;
+
+&lt;p&gt;Open up MKVMerge GUI (which will be installed on your desktop from installing mkvtoolnix), and add the .mkv file and the audio files (FLAC, DTS, AC3) and then choose a filename at the bottom, then start the mux. Thats it! After that, you will need madflac installed to playback the FLAC in any player, or if its DTS or AC3, the built in decoders in MPC-HC or ffdshow will handle it.&lt;/p&gt;
+
+&lt;h3 id=&#34;extra-notes&#34;&gt;Extra Notes&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;If the main audio is a plain DD5.1 AC3 track and it&amp;rsquo;s track 3 (Warner movie with no lossless for example), to get that audio you would use 3: audio.ac3 in the command, and it will just extract the audio without any reencoding or converting. You can do that for any of the extra audio tracks.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;* You can save additional space by reducing 24-bit lossless or uncompressed tracks to 16-bit since 24-bit audio is unable to losslessly compress efficiently (24-bit FLAC files sourced from a Blu-ray will most likey average 4 megabits, while downconverted 16-bit versions will most likey average 1.4 megabits or lower). A 24-bit losslessly encoded track is usually 3x the size of a 16-bit version for an mostly unnoticeable improvement. And a 16-bit lossless track will always be better better than any lossy version.&lt;/p&gt;
+
+&lt;p&gt;** While not exactly the same in structure as DTS-HD, TrueHD tracks also have an embedded lossy track for backwards compatibility with older hardware, in the format of AC3. You will see this situation often on Sony and Paramount discs.&lt;/p&gt;
+
+&lt;p&gt;Here&amp;rsquo;s a rundown of how video/audio type will be handled depending on how you save it. Straight demuxing is only recommended for AC3 and DTS tracks.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;If the video is MPEG-4 AVC/H264&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;video.mkv would extract the video to mkv&lt;/li&gt;
+&lt;li&gt;video.avc or video.h264 would demux the video (Not Recommended)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;If the video is VC1&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;video.mkv would extract the video to mkv&lt;/li&gt;
+&lt;li&gt;video.vc1 would demux the video (Not Recommended)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;If the video is MPEG-2&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;video.mkv would extract the video to mkv&lt;/li&gt;
+&lt;li&gt;video.mpg would demux the video (Not Recommended)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;If the audio is PCM:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;audio.flac would compress the audio at 100% quality&lt;/li&gt;
+&lt;li&gt;audio.ac3 would reencode the audio at 640kbps&lt;/li&gt;
+&lt;li&gt;audio.dts would reencode the audio at 1509kbps&lt;/li&gt;
+&lt;li&gt;audio.pcm would demux the audio&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;If the audio is DTS-HD MA or HR&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;audio.flac would compress the audio at 100% quality&lt;/li&gt;
+&lt;li&gt;audio.ac3 would reencode the audio (Not Recommended)&lt;/li&gt;
+&lt;li&gt;audio.dts would demux the audio&lt;/li&gt;
+&lt;li&gt;audio.dtshd would demux the audio&lt;/li&gt;
+&lt;li&gt;audio.dts -core would extract the pre-encoded 1509kbps core (Recommended)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;If the audio is TrueHD&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;audio.flac would compress the audio at 100% quality&lt;/li&gt;
+&lt;li&gt;audio.ac3 would extract the pre-encoded 640kbps core&lt;/li&gt;
+&lt;li&gt;audio.dts would reencode the audio at 1509kbps&lt;/li&gt;
+&lt;li&gt;audio.thd would demux the audio&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;If the audio is DD/AC3&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;audio.flac would compress the audio at 100% quality (unnecessary)&lt;/li&gt;
+&lt;li&gt;audio.ac3 would extract the audio (Recommended)&lt;/li&gt;
+&lt;li&gt;audio.dts would reencode the audio (Not Recommended)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;If the audio is DTS&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;audio.flac would compress the audio at 100% quality (unnecessary)&lt;/li&gt;
+&lt;li&gt;audio.ac3 would reencode the audio (Not Recommended)&lt;/li&gt;
+&lt;li&gt;audio.dts would extract the audio (Recommended)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;seamless-branching&#34;&gt;Seamless Branching&lt;/h2&gt;
+
+&lt;p&gt;If the movie is split over multiple m2ts files, you will have to combine them to make single video and audio files. Not to worry, eac3to can do most of the work. So, instead of using eac3to on a particular m2ts, point to the top directory of the Blu-ray you want to work with, like this:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;eac3to e:\PINEAPPLE_EXPRESS\
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Your results will be all the playlists, like this:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;Sample 1&lt;/p&gt;
+
+&lt;p&gt;```
+00634.mpls, 1:57:27
+[321+334+323+335+325+336+327+337+329+338+331+339+333].m2ts&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;h264/AVC, 1080p24 /1.001 (16:9)&lt;/li&gt;
+&lt;li&gt;TrueHD, English, multi-channel, 48khz&lt;/li&gt;
+&lt;li&gt;TrueHD, French, multi-channel, 48khz&lt;/li&gt;
+&lt;li&gt;AC3, Spanish, multi-channel, 48khz&lt;/li&gt;
+&lt;li&gt;AC3, Portuguese, multi-channel, 48khz&lt;/li&gt;
+&lt;li&gt;AC3, Thai, multi-channel, 48khz&lt;/li&gt;
+&lt;li&gt;AC3, English, stereo, 48khz&lt;/li&gt;
+&lt;li&gt;AC3, English, stereo, 48khz
+```&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Sample 2&lt;/p&gt;
+
+&lt;p&gt;```
+00632.mpls, 1:52:01
+[321+322+323+324+325+326+327+328+329+330+331+332+333].m2ts&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;h264/AVC, 1080p24 /1.001 (16:9)&lt;/li&gt;
+&lt;li&gt;TrueHD, English, multi-channel, 48khz&lt;/li&gt;
+&lt;li&gt;TrueHD, French, multi-channel, 48khz&lt;/li&gt;
+&lt;li&gt;AC3, Spanish, multi-channel, 48khz&lt;/li&gt;
+&lt;li&gt;AC3, Portuguese, multi-channel, 48khz&lt;/li&gt;
+&lt;li&gt;AC3, Thai, multi-channel, 48khz&lt;/li&gt;
+&lt;li&gt;AC3, English, stereo, 48khz&lt;/li&gt;
+&lt;li&gt;AC3, English, stereo, 48khz
+```&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Sample 3&lt;/p&gt;
+
+&lt;p&gt;```
+00665.mpls, 00341.m2ts, 0:21:08&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;h264/AVC, 1080i60 /1.001 (16:9)&lt;/li&gt;
+&lt;li&gt;AC3, English, stereo, 48khz
+```&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Sample 4&lt;/p&gt;
+
+&lt;p&gt;```
+00700.mpls, 0:32:43
+[300+301+302+303+342].m2ts&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;MPEG2, 480i60 /1.001 (16:9)&lt;/li&gt;
+&lt;li&gt;AC3, English, stereo, 48khz
+```&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Each playlist has the order, or branches, the m2ts&amp;rsquo;s are played in. We see 2 different playlists for this particular movie. The playlist with the longer runtime is the unrated/extended cut and the playlist with the shorter runtime is the theatrical cut. The other two playlists are bonus content obviously. We want to remux the extended cut, so that playlist is specified by adding its number to the command, followed by a right bracket.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;eac3to e:\PINEAPPLE_EXPRESS\ 1)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Then we will see the details of that playlist:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;M2TS, 1 video track, 7 audio tracks, 15 subtitle tracks, 1:57:26
+1: Chapters, 16 chapters
+2: h264/AVC, 1080p24 /1.001 (16:9)
+3: TrueHD/AC3, English, 5.1 channels, 48khz, dialnorm: -27dB
+   (embedded: AC3, 5.1 channels, 448kbps, 48khz, dialnorm: -27dB)
+4: TrueHD/AC3, French, 5.1 channels, 48khz, dialnorm: -27dB
+   (embedded: AC3, 5.1 channels, 448kbps, 48khz, dialnorm: -27dB)
+5: AC3, Spanish, 5.1 channels, 640kbps, 48khz, dialnorm: -27dB
+6: AC3, Portuguese, 5.1 channels, 640kbps, 48khz, dialnorm: -27dB
+7: AC3, Thai, 5.1 channels, 640kbps, 48khz, dialnorm: -27dB
+8: AC3, English, 2.0 channels, 640kbps, 48khz, dialnorm: -27dB
+9: AC3, English, 2.0 channels, 640kbps, 48khz, dialnorm: -27dB
+10: Subtitle (PGS), English
+11: Subtitle (PGS), English
+12: Subtitle (PGS), French
+13: Subtitle (PGS), Spanish
+14: Subtitle (PGS), Portuguese
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Add your preferences for video and audio output after the number and bracket, run the command, and combine the final video .mkv and audio file(s) like normal:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;eac3to e:\PINEAPPLE_EXPRESS\ 1) 2: pineapple.mkv 3: pineapple.flac
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;extra-note-on-seamless-branching&#34;&gt;Extra note on seamless branching:&lt;/h3&gt;
+
+&lt;p&gt;The audio tracks on some Blu-rays may have gaps in between the m2ts&amp;rsquo;s. As you might guess by now, eac3to will fix it for you. Here&amp;rsquo;s an example of what eac3to found when it got to the end of remux of a Blu-ray that had gaps:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;[a05] Audio overlaps for 11ms at playtime 1:14:09.
+[a05] Audio overlaps for 7ms at playtime 1:16:59.
+[a05] Audio overlaps for 6ms at playtime 1:38:53.
+[a05] Audio overlaps for 9ms at playtime 1:59:19.
+[a05] Audio overlaps for 8ms at playtime 2:01:38.
+[a05] Audio overlaps for 11ms at playtime 2:15:16.
+[a05] Audio overlaps for 10ms at playtime 2:19:19.
+[a05] Starting 2nd pass...
+[a05] Decoding FLAC...
+[a05] Realizing RAW/PCM gaps...
+[a05] Encoding FLAC with libFlac...
+[a05] Creating file &amp;quot;new.flac&amp;quot;...
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;eac3to found all the gaps and created a new FLAC file without the gaps using this information. You just to wait a little while longer for it to finish processing.&lt;/p&gt;
+
+&lt;h2 id=&#34;remuxed-file-sizes-see-how-much-you-can-save&#34;&gt;Remuxed file sizes: (see how much you can save!)&lt;/h2&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Title&lt;/th&gt;
+&lt;th&gt;Full&lt;/th&gt;
+&lt;th&gt;Remuxed&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;The Italian Job 1969 Remuxed with FLAC from TrueHD&lt;/td&gt;
+&lt;td&gt;43.6GB&lt;/td&gt;
+&lt;td&gt;20.1GB&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;2001: A Space Odyssey Remuxed with FLAC from PCM&lt;/td&gt;
+&lt;td&gt;34.8GB&lt;/td&gt;
+&lt;td&gt;15.2GB&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;A Bug&amp;rsquo;s Life Remuxed with 16-bit FLAC from DTS-HD MA&lt;/td&gt;
+&lt;td&gt;41.6GB&lt;/td&gt;
+&lt;td&gt;16.8GB&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;In My Father&amp;rsquo;s Den Remuxed with FLAC from PCM&lt;/td&gt;
+&lt;td&gt;45.0GB&lt;/td&gt;
+&lt;td&gt;26.9GB&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;The Third Man Remuxed with FLAC from PCM&lt;/td&gt;
+&lt;td&gt;40.3GB&lt;/td&gt;
+&lt;td&gt;22.5GB&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;Dances with Wolves Remuxed with 5.1 DTS core from 7.1 DTS-HD MA&lt;/td&gt;
+&lt;td&gt;43.1GB&lt;/td&gt;
+&lt;td&gt;31.2GB&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;Fearless Remuxed with 5.1 FLAC from 7.1 PCM&lt;/td&gt;
+&lt;td&gt;41.7GB&lt;/td&gt;
+&lt;td&gt;30.0GB&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;Pineapple Express Remuxed with FLAC&lt;/td&gt;
+&lt;td&gt;46.2GB&lt;/td&gt;
+&lt;td&gt;17.8GB&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;House of Flying Daggers Remuxed with DTS core from DTS-HD HR&lt;/td&gt;
+&lt;td&gt;28.1GB&lt;/td&gt;
+&lt;td&gt;17.0GB&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;Fight Club Remuxed with DTS-ES&lt;/td&gt;
+&lt;td&gt;46.0GB&lt;/td&gt;
+&lt;td&gt;22.8GB&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;The Mummy 3 Remuxed with FLAC&lt;/td&gt;
+&lt;td&gt;45.8GB&lt;/td&gt;
+&lt;td&gt;17.4GB&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;Amélie Remuxed with FLAC and DD core from TrueHD&lt;/td&gt;
+&lt;td&gt;36.5GB&lt;/td&gt;
+&lt;td&gt;25.6GB&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;Dark City Director&amp;rsquo;s Cut Remuxed with DTS core from DTS-HD MA&lt;/td&gt;
+&lt;td&gt;42.3GB&lt;/td&gt;
+&lt;td&gt;15.6GB&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;Ong-Bak Remuxed with DTS core from DTS-HD HR&lt;/td&gt;
+&lt;td&gt;21.5GB&lt;/td&gt;
+&lt;td&gt;15.1GB&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;Beetlejuice Remuxed with DD core from TrueHD&lt;/td&gt;
+&lt;td&gt;20.3GB&lt;/td&gt;
+&lt;td&gt;13.8GB&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;The Science of Sleep Remuxed with FLAC from PCM and DD&lt;/td&gt;
+&lt;td&gt;39.2GB&lt;/td&gt;
+&lt;td&gt;15.3GB&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;Infernal Affairs Remuxed with FLAC and DTS from PCM&lt;/td&gt;
+&lt;td&gt;22.9GB&lt;/td&gt;
+&lt;td&gt;15.1GB&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;Infernal Affairs 2 Remuxed with FLAC from DTS-HD MA&lt;/td&gt;
+&lt;td&gt;19.6GB&lt;/td&gt;
+&lt;td&gt;13.7GB&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;Hero Remuxed with FLAC and DTS core from DTS-HD MA&lt;/td&gt;
+&lt;td&gt;27.0GB&lt;/td&gt;
+&lt;td&gt;18.9GB&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;Almost Famous Remuxed with FLAC and DTS from TrueHD&lt;/td&gt;
+&lt;td&gt;37.2GB&lt;/td&gt;
+&lt;td&gt;31.5GB&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;Ip Man Remuxed with 5.1 FLAC from 7.1 PCM&lt;/td&gt;
+&lt;td&gt;39.7GB&lt;/td&gt;
+&lt;td&gt;19.5GB&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h2 id=&#34;lastly&#34;&gt;Lastly&amp;hellip;&lt;/h2&gt;
+
+&lt;p&gt;Here&amp;rsquo;s an another guide in case I missed something: &lt;a href=&#34;http://en.wikibooks.org/wiki/Eac3to/How_to_Use&#34;&gt;http://en.wikibooks.org/wiki/Eac3to/How_to_Use&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Here are some nice GUIs: Another EAC3to GUI Plus, Eac3to and More GUI, HD-DVD/Blu-Ray Stream Extractor&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
