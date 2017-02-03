@@ -1,5 +1,5 @@
 title = "av.community"
-baseurl = "https://av.community/"
+baseurl = "/"
 languagecode = "en-us"
 disableHugoGeneratorInject = true
 

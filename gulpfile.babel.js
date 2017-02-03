@@ -2,11 +2,13 @@ const autoprefixer = require('gulp-autoprefixer');
 const babel = require('gulp-babel');
 const cache = require('gulp-cache');
 const concat = require('gulp-concat');
+const critical = require('critical').stream;
 const cssnano = require('gulp-cssnano');
 const del = require('del');
 const eslint = require('gulp-eslint');
 const fs = require('fs');
 const gulp = require('gulp');
+const gutil = require('gulp-util');
 const htmlmin = require('gulp-htmlmin');
 const imagemin = require('gulp-imagemin');
 const newer = require('gulp-newer');
@@ -20,6 +22,7 @@ const shell = require('gulp-shell');
 const size = require('gulp-size');
 const swPrecache = require('sw-precache');
 const uglify = require('gulp-uglify');
+const uncss = require('gulp-uncss');
 
 const AUTOPREFIXER_BROWSERS = ['last 2 versions', '> 1%'];
 const FAVICON_DATA_FILE = 'config/favicons.json';
@@ -54,6 +57,9 @@ gulp.task('styles', () =>
     .pipe(newer('.tmp/assets/styles'))
     .pipe(sass({ precision: 10 }).on('error', sass.logError))
     .pipe(autoprefixer(AUTOPREFIXER_BROWSERS))
+    .pipe(uncss({
+      html: ['public/**/*.html'],
+    }))
     .pipe(cssnano())
     .pipe(size({ title: 'styles' }))
     .pipe(gulp.dest('.tmp/assets/styles'))
@@ -103,14 +109,27 @@ gulp.task('html', () =>
     .pipe(gulp.dest('public')),
 );
 
+gulp.task('critical-css', () =>
+  gulp.src('public/**/*.html')
+    .pipe(critical({
+      base: 'public/',
+      inline: true,
+      minify: true,
+      css: ['public/assets/styles/main.css'],
+    }))
+    .on('error', err => gutil.log(gutil.colors.red(err.message)))
+    .pipe(gulp.dest('public')),
+);
+
 gulp.task('clean', () => del(['.tmp', 'public/*', '!public/.git'], { dot: true }));
 
 gulp.task('build', ['clean'], cb =>
   runSequence(
     'hugo',
-    ['html', 'images', 'scripts', 'styles'],
+    'html',
+    ['images', 'scripts', 'styles'],
     'revision',
-    'generate-service-worker',
+    ['generate-service-worker'],
     cb,
   ),
 );
