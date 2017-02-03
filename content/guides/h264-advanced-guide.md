@@ -1,5 +1,7 @@
 ---
 title: H.264 Advanced Guide
+tags:
+  - h264
 ---
 
 Source: https://app.zencoder.com/docs/guides/encoding-settings/h264-advanced

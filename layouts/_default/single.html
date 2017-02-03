@@ -19,6 +19,12 @@
         <h1><%= locals[:title] || current_page.data.title %></h1> -->
       </header>
       {{ .Content }}
+
+      <ul id="tags">
+  {{ range .Params.tags }}
+    <li><a href="{{ "/tags/" | relLangURL }}{{ . | urlize }}">{{ . }}</a> </li>
+  {{ end }}
+</ul>
     </div>
   </section>
 

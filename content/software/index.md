@@ -1,7 +1,6 @@
 ---
 title: Software
 type: topic
-showChildren: true
 menu:
   main:
     identifier: software

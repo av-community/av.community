@@ -5,42 +5,57 @@
     <div class="inner">
       <header class="major">
         <h1>
-        {{ if .Params.heading }}
-            {{ .Params.heading }}
-        {{ else }}
-            {{ .Title }}
-        {{ end }}
+        {{- if .Params.heading -}}
+            {{- .Params.heading -}}
+        {{- else -}}
+            {{- .Title -}}
+        {{- end -}}
         </h1>
-
-        <!-- <% if current_page.data.type %>
-        <% color = color_hash(current_page.data.type) %>
-        <span class="type" style="background-color: #<%= color %>; color: <%= contrasting_text_color(color) %>"><%= current_page.data.type %></span>
-        <% end %>
-        <h1><%= locals[:title] || current_page.data.title %></h1> -->
       </header>
       {{ .Content }}
 
-      {{ if ne .Params.menu.main.identifier nil}}
-      <nav class="related-links">
-          {{ range (index .Menus "main").Children }}
-          {{ if eq .Identifier ""}}
-          <h4><a href="{{.URL}}" >{{ .Name }}</a></h4>
-          {{ end }}
-          {{ end }}
-      </nav>
-      {{ end }}
+      {{- if ne .Params.menu.main.identifier nil -}}
+        {{- $taggedPages := (index .Site.Taxonomies.tags .Params.menu.main.identifier).Pages -}}
+        {{- if gt (len $taggedPages) 0 -}}
+          <h3>Tagged Pages</h3>
+          {{- range $taggedPages -}}
+            <h4><a href="{{ .Permalink }}">{{ .LinkTitle }}</a></h4>
+          {{- end -}}
+        {{- end -}}
 
-      <hr />
+        {{ $children := (index .Menus "main").Children }}
 
-      {{ if ne .Params.menu.main.identifier nil}}
-      <nav class="related-links">
-          {{ range (index .Menus "main").Children }}
-          {{ if ne .Identifier ""}}
-          <h4><a href="{{.URL}}" >{{ .Name }}</a></h4>
-          {{ end }}
-          {{ end }}
-      </nav>
-      {{ end }}
+
+        {{- if eq .Params.flat true -}}
+          {{- range $children -}}
+          <h4><a href="{{ .URL }}" >{{ .Name }}</a></h4>
+          {{- end -}}
+        {{- else -}}
+
+          {{- range $children -}}
+            {{- if eq (.Children | len) 0 -}}
+              <h4><a href="{{ .URL }}" >{{ .Name }}</a></h4>
+            {{- end -}}
+          {{- end -}}
+
+          {{- $.Scratch.Set "needsHR" false -}}
+          {{- range $children -}}
+            {{- if gt (.Children | len) 0 -}}
+              {{- $.Scratch.Set "needsHR" true -}}
+            {{- end -}}
+          {{- end -}}
+
+          {{- if $.Scratch.Get "needsHR" -}}
+            <hr />
+          {{- end -}}
+
+          {{- range $children -}}
+            {{- if gt (.Children | len) 0 -}}
+            <h4><a href="{{ .URL }}" >{{ .Name }}</a></h4>
+            {{- end -}}
+          {{- end -}}
+        {{- end -}}
+      {{- end -}}
 
 
     </div>

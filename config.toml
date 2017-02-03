@@ -10,3 +10,6 @@ staticdir = ".tmp"
 
 [params]
 cachebuster = true
+
+[taxonomies]
+tag = "tags"

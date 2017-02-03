@@ -1,5 +1,8 @@
 ---
 title: Advanced x264 Encoding Guide
+tags:
+  - x264
+  - h264
 ---
 
 ## Getting to Know Your x264
