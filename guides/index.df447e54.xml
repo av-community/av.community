@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>av.community</title>
-    <link>/index.8255ae0a.xml</link>
-    <description>Recent content on av.community</description>
+    <title>Guides on av.community</title>
+    <link>/guides/index.df447e54.xml</link>
+    <description>Recent content in Guides on av.community</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Wed, 01 Feb 2017 20:14:46 -0600</lastBuildDate>
-    <atom:link href="/index.8255ae0a.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="/guides/index.df447e54.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>10-Bit H.264</title>
@@ -178,24 +178,6 @@ Calculating effort aside is it better to encode a x264 8-bit high-bitrate source
     </item>
     
     <item>
-      <title>About</title>
-      <link>/about/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/about/</guid>
-      <description>
-
-&lt;h2 id=&#34;why&#34;&gt;Why&lt;/h2&gt;
-
-&lt;p&gt;Because all the info was spread everywhere&lt;/p&gt;
-
-&lt;h2 id=&#34;who&#34;&gt;Who&lt;/h2&gt;
-
-&lt;p&gt;Jacob Gillespie and the community&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
       <title>Advanced x264 Encoding Guide</title>
       <link>/guides/advanced-x264-encoding/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
@@ -340,16 +322,6 @@ There are many parameters that you may have seen used in other encodes. More tha
 &lt;/ul&gt;
 
 &lt;p&gt;Source: &lt;a href=&#34;https://www.reddit.com/r/trackers/comments/wevh2/good_beginning_x264_reference_guide/?st=iykv0fdu&amp;amp;sh=6a965450&#34;&gt;https://www.reddit.com/r/trackers/comments/wevh2/good_beginning_x264_reference_guide/?st=iykv0fdu&amp;amp;sh=6a965450&lt;/a&gt;&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Audio Codecs</title>
-      <link>/codecs/audio/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/codecs/audio/</guid>
-      <description>&lt;p&gt;All about audio codecs&lt;/p&gt;
 </description>
     </item>
     
@@ -868,36 +840,122 @@ This notation is not valid for all combinations and has exceptions, e.g. 4:1:0 (
     </item>
     
     <item>
-      <title>Codecs</title>
-      <link>/codecs/</link>
+      <title>Encoding Video for Blu-ray Using H265 / AVC</title>
+      <link>/guides/encoding-video-for-blu-ray-using-h264-avc/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/codecs/</guid>
-      <description>&lt;p&gt;All about codecs&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Containers</title>
-      <link>/containers/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/containers/</guid>
-      <description>&lt;p&gt;All about containers&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Getting Started</title>
-      <link>/getting-started/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/getting-started/</guid>
-      <description>&lt;p&gt;This is the getting started page&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-javascript&#34; data-lang=&#34;javascript&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;kr&#34;&gt;import&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;test&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;from&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;test&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+      <guid>/guides/encoding-video-for-blu-ray-using-h264-avc/</guid>
+      <description>&lt;p&gt;Source: &lt;a href=&#34;http://forum.doom9.org/showthread.php?t=154533&#34;&gt;http://forum.doom9.org/showthread.php?t=154533&lt;/a&gt;&lt;/p&gt;
 
-&lt;span class=&#34;nx&#34;&gt;console&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;log&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;sb&#34;&gt;`hi &lt;/span&gt;&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;test&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;sb&#34;&gt;`&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Here is part of specification that apply when encoding with H264/AVC codec, all parameters showed here are not guessing, it&amp;rsquo;s based on original Blu-Ray specification, which are not available in public.&lt;/p&gt;
+
+&lt;p&gt;NOTE: This is discussion about settings that are for creating 100% compliant Blu-Ray structures, not for encoding from Blu-Ray sources to matroska/mp4 or other media, if you encode to those skip this nightmare :)&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;GENERAL CONSTRAINTS FOR MPEG-4 H264/AVC&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;1.1 ALLOWED RESOLUTIONS/FRAMERATES&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://tom.niko.users.sbb.rs/resolutions.png&#34;&gt;http://tom.niko.users.sbb.rs/resolutions.png&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;1.2 ALLOWED LEVELS, PROFILES, REFERENCE FRAMES, VBV&lt;/p&gt;
+
+&lt;p&gt;1.2.1 Primary Video Rules&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://tom.niko.users.sbb.rs/gopsrefs2.png&#34;&gt;http://tom.niko.users.sbb.rs/gopsrefs2.png&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;1.2.2 Secondary Video Rules&lt;/p&gt;
+
+&lt;p&gt;NOTE: In case of 1080 and 720 resolutions same rules apply as Primary video, while 576 and 480 resolutions have stricter parameters showed in table:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://tom.niko.users.sbb.rs/gopsrefs3.png&#34;&gt;http://tom.niko.users.sbb.rs/gopsrefs3.png&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;1.3 SIMPLE ASPECT RATIO&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://tom.niko.users.sbb.rs/sar.png&#34;&gt;http://tom.niko.users.sbb.rs/sar.png&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;1.4 COLOR CHARACTERISTICS&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://tom.niko.users.sbb.rs/color.png&#34;&gt;http://tom.niko.users.sbb.rs/color.png&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;1.5 OTHER REQUIRED PARAMETERS&lt;/p&gt;
+
+&lt;p&gt;8-bit (4:2:0) Colorspace is only allowed
+Main and High profiles are allowed
+Maximum 3 B-Frames is allowed
+NAL-HRD Type 2 capable encoder is needed&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;ENCODE BLU-RAY VIDEO USING x264&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;2.1 MANDATORY PARAMETERS&lt;/p&gt;
+
+&lt;p&gt;Every encode for Blu-Ray must contain this parameters, without it will not meet Blu-Ray specification.&lt;/p&gt;
+
+&lt;p&gt;&amp;ndash;bluray-compatEnforce x264 to create BD compliant stream, that will reduce x264 settings to BD compatible: bframe&amp;lt;=3, ref&amp;lt;=4 for 1080, ref&amp;lt;=6 for 720/576/480, bpyramid&amp;lt;=strict, weightp&amp;lt;=1, aud=1, nalhrd=vbr&lt;/p&gt;
+
+&lt;p&gt;&amp;ndash;levelBlu-Ray level, see the table for the appropriate level&lt;/p&gt;
+
+&lt;p&gt;&amp;ndash;keyintMaximum number displayed pictures in GOP. If you set Maximum bitrate less or equal to 15mbps you can use 2 second long GOP otherwise, 1 second GOP must be used.&lt;/p&gt;
+
+&lt;p&gt;&amp;ndash;vbv-maxrateMaximum allowed bitrate. Depend of destination media, for normal BD Media, maximum settings is allowed (40000), while for DVD Media (eg BD-5 or BD-9) there is no maximum per Blu-Ray specification, but is strongly recommended that use less or equal to 15000, since DVD reading is slower.&lt;/p&gt;
+
+&lt;p&gt;&amp;ndash;vbv-bufsizeMaximum allowed buffer, buffer size is in relation with maxrate. Since STD Buffer Delay for Blu-Ray allows maximum 1 second. This mean to divide buffer with maxrate and see if result is less or equal to 1, if not, buffer is need to be reduced to lower value that meet 1 second STD. For BD media, maximum settings is allowed (30000), but if not meet STD Buffer Delay, then need to be reduced to lower value. For DVD media there is no maximum in Blu-Ray specification, but is strongly recommended that use less or equal to 15000, and again need to meet STD delay of 1 second.&lt;/p&gt;
+
+&lt;p&gt;For example:&lt;/p&gt;
+
+&lt;p&gt;&amp;ndash;vbv-bufsize 30000 &amp;ndash;vbv-maxrate 40000 is allowed
+&amp;ndash;vbv-bufsize 30000 &amp;ndash;vbv-maxrate 30000 is allowed
+&amp;ndash;vbv-bufsize 15000 &amp;ndash;vbv-maxrate 30000 is allowed
+&amp;ndash;vbv-bufsize 30000 &amp;ndash;vbv-maxrate 15000 is not allowed (delay is greater than 1 second)&lt;/p&gt;
+
+&lt;p&gt;Basicly vbv-bufsize should newer been greater than vbv-maxrate, that is whole point.&lt;/p&gt;
+
+&lt;p&gt;&amp;ndash;sar
+Simple Aspect Ratio, must present in stream, see the table for the appropriate settings&lt;/p&gt;
+
+&lt;p&gt;&amp;ndash;slices
+Only when encoding with &amp;ndash;level 4.1, slices need to be set to 4 or greater, otherwise you can skip this setting or set it to 1.&lt;/p&gt;
+
+&lt;p&gt;-o xxx.264
+Output file must be in raw 264 elementary stream (extension .264) otherwise settings will not applied correctly. DO NOT USE MKV OR MP4.&lt;/p&gt;
+
+&lt;p&gt;2.2 OPTIONAL PARAMETERS&lt;/p&gt;
+
+&lt;p&gt;This parameters is optional and not need for every encode.&lt;/p&gt;
+
+&lt;p&gt;&amp;ndash;colorprim
+&amp;ndash;transfer
+&amp;ndash;colormatrix
+Specify color primaries, transfer characteristics and color matrix. This is optional, and not need to be present, see the table for the appropriate settings.&lt;/p&gt;
+
+&lt;p&gt;&amp;ndash;pic-struct
+Need only when fake interlaced is used, and it&amp;rsquo;s default on with interlaced and pulldown. It&amp;rsquo;s fine with progressive aslo, and some BD verification tools request to be present in stream.&lt;/p&gt;
+
+&lt;p&gt;&amp;ndash;open-gop
+Use non-IDR pictures instead classic IDR picture, this will tend to resolve pulsing picture problem that is usually came with short GOP&amp;rsquo;s.&lt;/p&gt;
+
+&lt;p&gt;&amp;ndash;fake-interlaced
+Since 25p or 30p video is not allowed for Primary Video, encoding progressive video that meet Blu-Ray specification is only possible with this option. If use this option you aslo need to specify &amp;ndash;pic-struct&lt;/p&gt;
+
+&lt;p&gt;&amp;ndash;qpfileNeed for chapters.&lt;/p&gt;
+
+&lt;p&gt;2.2 EXAMPLES&lt;/p&gt;
+
+&lt;p&gt;Progressive&lt;/p&gt;
+
+&lt;p&gt;1080p (&lt;a href=&#34;http://www.x264bluray.com/home/1080i-p&#34;&gt;http://www.x264bluray.com/home/1080i-p&lt;/a&gt;)
+720p (&lt;a href=&#34;http://www.x264bluray.com/home/720p-encoding&#34;&gt;http://www.x264bluray.com/home/720p-encoding&lt;/a&gt;)
+576p (&lt;a href=&#34;http://www.x264bluray.com/home/576p-pal&#34;&gt;http://www.x264bluray.com/home/576p-pal&lt;/a&gt;)
+480p (&lt;a href=&#34;http://www.x264bluray.com/home/480p-ntsc&#34;&gt;http://www.x264bluray.com/home/480p-ntsc&lt;/a&gt;)&lt;/p&gt;
+
+&lt;p&gt;Interlaced&lt;/p&gt;
+
+&lt;p&gt;1080i (&lt;a href=&#34;http://www.x264bluray.com/home/1080i&#34;&gt;http://www.x264bluray.com/home/1080i&lt;/a&gt;)
+576i (&lt;a href=&#34;http://www.x264bluray.com/home/576i-pal&#34;&gt;http://www.x264bluray.com/home/576i-pal&lt;/a&gt;)
+480i (&lt;a href=&#34;http://www.x264bluray.com/home/480i-ntsc&#34;&gt;http://www.x264bluray.com/home/480i-ntsc&lt;/a&gt;)&lt;/p&gt;
 </description>
     </item>
     
@@ -1008,36 +1066,6 @@ This notation is not valid for all combinations and has exceptions, e.g. 4:1:0 (
 &lt;iframe src=&#34;https://player.vimeo.com/video/104554788&#34; width=&#34;640&#34; height=&#34;360&#34; frameborder=&#34;0&#34; webkitallowfullscreen mozallowfullscreen allowfullscreen&gt;&lt;/iframe&gt;
 
 &lt;iframe src=&#34;https://player.vimeo.com/video/115534648&#34; width=&#34;640&#34; height=&#34;360&#34; frameborder=&#34;0&#34; webkitallowfullscreen mozallowfullscreen allowfullscreen&gt;&lt;/iframe&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Media Production</title>
-      <link>/media-production/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/media-production/</guid>
-      <description>&lt;p&gt;Content here&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Media Storage</title>
-      <link>/media-storage/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/media-storage/</guid>
-      <description>&lt;p&gt;Content here&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Physical Media</title>
-      <link>/physical-media/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/physical-media/</guid>
-      <description>&lt;p&gt;All about physical media&lt;/p&gt;
 </description>
     </item>
     

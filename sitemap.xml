@@ -23,6 +23,11 @@
   </url>
   
   <url>
+    <loc>/tags/bluray/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>/guides/chroma-subsampling/</loc>
   </url>
   
@@ -42,6 +47,10 @@
   
   <url>
     <loc>/containers/</loc>
+  </url>
+  
+  <url>
+    <loc>/guides/encoding-video-for-blu-ray-using-h264-avc/</loc>
   </url>
   
   <url>
