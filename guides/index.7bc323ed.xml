@@ -2,12 +2,12 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Guides on av.community</title>
-    <link>/guides/index.df447e54.xml</link>
+    <link>/guides/index.7bc323ed.xml</link>
     <description>Recent content in Guides on av.community</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Wed, 01 Feb 2017 20:14:46 -0600</lastBuildDate>
-    <atom:link href="/guides/index.df447e54.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="/guides/index.7bc323ed.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>10-Bit H.264</title>
@@ -1549,6 +1549,28 @@ M2TS, 1 video track, 5 audio tracks, 8 subtitle tracks
 &lt;p&gt;Here&amp;rsquo;s an another guide in case I missed something: &lt;a href=&#34;http://en.wikibooks.org/wiki/Eac3to/How_to_Use&#34;&gt;http://en.wikibooks.org/wiki/Eac3to/How_to_Use&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;Here are some nice GUIs: Another EAC3to GUI Plus, Eac3to and More GUI, HD-DVD/Blu-Ray Stream Extractor&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Test Media</title>
+      <link>/guides/test-media/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/guides/test-media/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;http://media.xiph.org/&#34;&gt;http://media.xiph.org/&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;and&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://www.cdvl.org/&#34;&gt;http://www.cdvl.org/&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;and&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://www.w6rz.net/&#34;&gt;http://www.w6rz.net/&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;and&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://jell.yfish.us/&#34;&gt;http://jell.yfish.us/&lt;/a&gt;&lt;/p&gt;
 </description>
     </item>
     
